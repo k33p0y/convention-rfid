@@ -1,0 +1,107 @@
+{% load static %}
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'sb_admin/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'sb_admin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'sb_admin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{% static 'sb_admin/js/sb-admin-2.min.js' %}"></script>
+
+<!-- Sweetalert2 -->
+<script src="{% static 'sweetalert2-8.8.5/js/sweetalert2.all.min.js' %}"></script>
+
+<!-- Toggle active class in sidebar menu -->
+<!--
+<script>
+    $(function (){
+        // get current_active in sessionStorage
+        var current_active = sessionStorage.getItem("current_active");
+        // if current_active exists
+        if (current_active) {
+            $(function () {
+                // return clicked choice in Management dropdown menu
+                var targetElement = $(`.management_menu a:contains("${current_active}")`).filter(function() {
+                    return $(this).text() === `${current_active}`;
+                });
+                // Open Management dropdown menu
+                // remove 'collapsed' in class attribute then set aria-expanded to true in anchor tag
+                targetElement.parent().parent().siblings('a').removeClass('collapsed').attr('aria-expanded', 'true');
+                
+                // toggle active class in li.nav-item
+                targetElement.parent().parent().parent().addClass('active');
+                targetElement.parent().parent().parent().siblings('li').removeClass('active');
+
+                // add 'show' in div#managementCollapse class attribute
+                targetElement.parent().parent().addClass('show');
+
+                // add active class in current active item
+                targetElement.addClass('active');
+            });
+        }
+
+        // toggle active class in li.nav-item
+        $('#accordionSidebar li').click(function(e) {
+            // e.preventDefault();
+            $(this).addClass('active');
+            $(this).siblings('li').removeClass('active');
+        });
+        
+        // store clicked item in sessionStorage current_active variable
+        $('.management_menu a').click(function(e) {
+            sessionStorage.setItem("current_active", $(this).html());
+        })
+
+        // clear sessionStorage
+        $('.home').click(function () {
+            sessionStorage.removeItem('current_active');
+        });
+    });
+</script>
+-->
+
+<!-- Display user fullname in navbar -->
+<!--
+<script>
+    $(function (){
+        var fname = '{{request.user.first_name}}'.toLowerCase();
+        var lname = '{{request.user.last_name}}'.toLowerCase();
+        $('#fname_format').text(fname.charAt(0).toUpperCase() + fname.slice(1));
+        $('#lname_format').text(lname.charAt(0).toUpperCase() + lname.slice(1));
+    });
+</script>
+-->
+
+<!-- Sweetalert2 logout modal -->
+<!--
+<script>
+    $(function () {
+        $('#logout_alert').click(function () {
+            Swal.fire({
+                title: 'Ready to Leave?',
+                text: 'Click "Logout" below to end your current session.',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Logout'
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = '/accounts/logout/?next={{request.path}}'
+                }
+            })
+        });
+    });
+</script>
+-->
+
+<!-- Tooltip -->
+<!--
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+-->
