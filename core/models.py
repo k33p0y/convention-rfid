@@ -27,7 +27,7 @@ class Participant(models.Model):
     participant_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     rfid = models.CharField('RFID', max_length=15, unique=True)
     fname = models.CharField('First name', max_length=100)
-    mfname = models.CharField('Middle name', max_length=100, blank=True)
+    mname = models.CharField('Middle name', max_length=100, blank=True)
     lname = models.CharField('Last name', max_length=100)
     prc_num = models.CharField('PRC', max_length=15, unique=True)
     birthdate = models.DateField(blank=True)
