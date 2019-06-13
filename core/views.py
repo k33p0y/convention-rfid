@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.utils.timezone import localtime
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from .models import Participant, Convention, Society, Membership
-from .forms import SocietyForm, MembershipForm, ParticipantForm
+from .forms import SocietyForm, MembershipForm, ParticipantForm, ConventionForm
 
 # Generic form save
 def save_form(request, form, template_name):
@@ -236,4 +236,11 @@ class ConventionListJson(BaseDatatableView):
 
 def convention_list(request):
     return render(request, 'core/convention_list.html', {})
+
+def convention_create(request):
+    if request.method == 'POST':
+        form = ConventionForm(request.POST)
+    else:
+        form = ConventionForm()
+    return save_form(request, form, 'core/convention/partial_convention_create.html')
 # CONVENTION END

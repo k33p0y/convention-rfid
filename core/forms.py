@@ -27,3 +27,21 @@ class ParticipantForm(forms.ModelForm):
     class Meta:
         model = Participant
         fields = ('rfid', 'fname', 'mname', 'lname', 'prc_num', 'birthdate', 'address', 'society', 'membership')
+
+class ConventionForm(forms.ModelForm):
+    date_start = forms.DateField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={'type': 'date',},
+        )
+    )
+    date_end = forms.DateField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={'type': 'date',},
+        )
+    )
+
+    class Meta:
+        model = Convention
+        fields = ('name', 'date_start', 'date_end', 'society')

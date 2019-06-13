@@ -28,7 +28,7 @@ urlpatterns += [
 # CONVENTION
 urlpatterns += [
     path('list/', views.convention_list, name='convention_list'),
-    path('convention-list-json/', views.ConventionListJson.as_view(), name='convention_list_json'),
-    # path('participant/create/', views.participant_create, name='participant_create'),
+    path('list-json/', views.ConventionListJson.as_view(), name='convention_list_json'),
+    path('create/', views.convention_create, name='convention_create'),
     # path('participant/<uuid:uuid>/update/', views.participant_update, name='participant_update'),   
 ]
