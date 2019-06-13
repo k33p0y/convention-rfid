@@ -22,6 +22,7 @@ from core import views as core_app_views
 urlpatterns = [
     path('', core_app_views.home, name='home'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('convention/', include('core.urls')),
     path('admin/', admin.site.urls),
 ]
 
