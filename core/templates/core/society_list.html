@@ -45,6 +45,7 @@
             }
         }
     </script>
+    <script src="{% static 'base/js/society/society.js'%}"></script>
 {% endblock %}
 
 {% block content %}
@@ -57,8 +58,8 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <button type="button" class="btn btn-outline-primary btn-sm"
-      data-url="">
+    <button type="button" class="btn btn-outline-primary btn-sm js-create-society"
+      data-url="{% url 'society_create' %}">
       Add Society
     </button>
   </div>
@@ -84,4 +85,12 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="modal-society" tabindex="-1" role="dialog" aria-labelledby="modal-society" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          
+      </div>
+  </div>
+</div>
 {% endblock %}

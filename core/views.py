@@ -1,8 +1,24 @@
 from django.shortcuts import render
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 from django.utils.timezone import localtime
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from .models import Participant, Convention, Society, Membership
+from .forms import SocietyForm
 
+# Generic form save
+def save_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+    
 def home(request):
     return render(request, 'index.html', {})
 
@@ -42,8 +58,11 @@ class SocietyListJson(BaseDatatableView):
             return super(SocietyListJson, self).render_column(row, column)
 
 def society_list(request):
+    return render(request, 'core/society_list.html', {})
 
-    context = {
-        
-    }
-    return render(request, 'core/society_list.html', context)
+def society_create(request):
+    if request.method == 'POST':
+        form = SocietyForm(request.POST)
+    else:
+        form = SocietyForm()
+    return save_form(request, form, 'core/society/partial_society_create.html')
