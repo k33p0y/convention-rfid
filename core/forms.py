@@ -5,3 +5,8 @@ class SocietyForm(forms.ModelForm):
     class Meta:
         model = Society
         fields = ('name', )
+
+class MembershipForm(forms.ModelForm):
+    class Meta:
+        model = Membership
+        fields = ('name', )
