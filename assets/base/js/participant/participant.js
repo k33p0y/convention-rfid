@@ -71,6 +71,6 @@ $(function (){
     $("#modal-participant").on("submit", ".js-participant-create-form", saveForm);
 
     // Update participant
-    // $("#table-participant").on("click", ".js-update-participant", loadForm);
-    // $("#modal-participant").on("submit", ".js-participant-update-form", saveForm);
+    $("#table-participant").on("click", ".js-update-participant", loadForm);
+    $("#modal-participant").on("submit", ".js-participant-update-form", saveForm);
 });

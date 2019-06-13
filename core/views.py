@@ -165,7 +165,7 @@ class ParticipantListJson(BaseDatatableView):
                 <button class='btn btn-default m-0 p-0 js-update-participant' data-url='/convention/participant/%s/update/' data-toggle='tooltip' title='Update'>
                     <i class='far fa-edit text-primary'></i>
                 </button>
-            """ % (row.membership_id) # create action buttons
+            """ % (row.participant_id) # create action buttons
         elif column == 'date_created':
             return "%s" % localtime(row.date_created).strftime("%Y-%m-%d %H:%M") # format date_created to "YYYY-MM-DD HH:mm"
         elif column == 'date_updated':
@@ -183,4 +183,12 @@ def participant_create(request):
     else:
         form = ParticipantForm()
     return save_form(request, form, 'core/participant/partial_participant_create.html')
+
+def participant_update(request, uuid):
+    participant = get_object_or_404(Participant, participant_id=uuid)
+    if request.method == 'POST':
+        form = ParticipantForm(request.POST, instance=participant)
+    else:
+        form = ParticipantForm(instance=participant)
+    return save_form(request, form, 'core/participant/partial_participant_update.html')
 # PARTICIPANT END

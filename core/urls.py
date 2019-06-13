@@ -22,4 +22,5 @@ urlpatterns += [
     path('participant/', views.participant_list, name='participant_list'),
     path('participant-list-json/', views.ParticipantListJson.as_view(), name='participant_list_json'),
     path('participant/create/', views.participant_create, name='participant_create'),
+    path('participant/<uuid:uuid>/update/', views.participant_update, name='participant_update'),
 ]
