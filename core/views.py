@@ -243,4 +243,12 @@ def convention_create(request):
     else:
         form = ConventionForm()
     return save_form(request, form, 'core/convention/partial_convention_create.html')
+
+def convention_update(request, uuid):
+    convention = get_object_or_404(Convention, convention_id=uuid)
+    if request.method == 'POST':
+        form = ConventionForm(request.POST, instance=convention)
+    else:
+        form = ConventionForm(instance=convention)
+    return save_form(request, form, 'core/convention/partial_convention_update.html')
 # CONVENTION END

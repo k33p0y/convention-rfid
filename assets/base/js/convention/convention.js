@@ -71,6 +71,6 @@ $(function (){
     $("#modal-convention").on("submit", ".js-convention-create-form", saveForm);
 
     // Update convention
-    // $("#table-convention").on("click", ".js-update-convention", loadForm);
-    // $("#modal-convention").on("submit", ".js-convention-update-form", saveForm);
+    $("#table-convention").on("click", ".js-update-convention", loadForm);
+    $("#modal-convention").on("submit", ".js-convention-update-form", saveForm);
 });
