@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.utils.timezone import localtime
@@ -45,10 +45,10 @@ class SocietyListJson(BaseDatatableView):
     def render_column(self, row, column):
         if column == 'action':
             return """
-                <button class='btn btn-default m-0 p-0' data-toggle='tooltip' title='Update'>
+                <button class='btn btn-default m-0 p-0 js-update-society' data-url='/convention/society/%s/update/' data-toggle='tooltip' title='Update'>
                     <i class='far fa-edit text-primary'></i>
                 </button>
-            """ # % (row.society_id) # create action buttons
+            """ % (row.society_id) # create action buttons
         elif column == 'date_created':
             return "%s" % localtime(row.date_created).strftime("%Y-%m-%d %H:%M") # format date_created to "YYYY-MM-DD HH:mm"
         elif column == 'date_updated':
@@ -66,3 +66,11 @@ def society_create(request):
     else:
         form = SocietyForm()
     return save_form(request, form, 'core/society/partial_society_create.html')
+
+def society_update(request, uuid):
+    society = get_object_or_404(Society, society_id=uuid)
+    if request.method == 'POST':
+        form = SocietyForm(request.POST, instance=society)
+    else:
+        form = SocietyForm(instance=society)
+    return save_form(request, form, 'core/society/partial_society_update.html')
