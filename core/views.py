@@ -176,4 +176,11 @@ class ParticipantListJson(BaseDatatableView):
 
 def participant_list(request):
     return render(request, 'core/participant_list.html', {})
+
+def participant_create(request):
+    if request.method == 'POST':
+        form = ParticipantForm(request.POST)
+    else:
+        form = ParticipantForm()
+    return save_form(request, form, 'core/participant/partial_participant_create.html')
 # PARTICIPANT END

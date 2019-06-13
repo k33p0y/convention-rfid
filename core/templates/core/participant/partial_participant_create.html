@@ -1,0 +1,15 @@
+<form action="{% url 'participant_create' %}" method="post" class="js-participant-create-form">
+    {% csrf_token %}
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Participant</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {% include 'core/participant/partial_participant_form.html' %} 
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>
