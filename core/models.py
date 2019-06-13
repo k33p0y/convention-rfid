@@ -48,6 +48,7 @@ class Convention(models.Model):
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
+    is_open = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
