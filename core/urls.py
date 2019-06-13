@@ -16,3 +16,9 @@ urlpatterns += [
     path('membership/create/', views.membership_create, name='membership_create'),
     path('membership/<uuid:uuid>/update/', views.membership_update, name='membership_update'),
 ]
+
+# PARTICIPANT
+urlpatterns += [
+    path('participant/', views.participant_list, name='participant_list'),
+    path('participant-list-json/', views.ParticipantListJson.as_view(), name='participant_list_json'),
+]
