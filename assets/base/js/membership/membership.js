@@ -71,6 +71,6 @@ $(function (){
     $("#modal-membership").on("submit", ".js-membership-create-form", saveForm);
 
     // Update membership
-    // $("#table-membership").on("click", ".js-update-membership", loadForm);
-    // $("#modal-membership").on("submit", ".js-membership-update-form", saveForm);
+    $("#table-membership").on("click", ".js-update-membership", loadForm);
+    $("#modal-membership").on("submit", ".js-membership-update-form", saveForm);
 });

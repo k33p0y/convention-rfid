@@ -14,4 +14,5 @@ urlpatterns += [
     path('membership/', views.membership_list, name='membership_list'),
     path('membership-list-json/', views.MembershipListJson.as_view(), name='membership_list_json'),
     path('membership/create/', views.membership_create, name='membership_create'),
+    path('membership/<uuid:uuid>/update/', views.membership_update, name='membership_update'),
 ]

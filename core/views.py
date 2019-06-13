@@ -122,4 +122,12 @@ def membership_create(request):
     else:
         form = MembershipForm()
     return save_form(request, form, 'core/membership/partial_membership_create.html')
+
+def membership_update(request, uuid):
+    membership = get_object_or_404(Membership, membership_id=uuid)
+    if request.method == 'POST':
+        form = MembershipForm(request.POST, instance=membership)
+    else:
+        form = MembershipForm(instance=membership)
+    return save_form(request, form, 'core/membership/partial_membership_update.html')
 # MEMBERSHIP END
