@@ -192,3 +192,48 @@ def participant_update(request, uuid):
         form = ParticipantForm(instance=participant)
     return save_form(request, form, 'core/participant/partial_participant_update.html')
 # PARTICIPANT END
+
+# CONVENTION START
+class ConventionListJson(BaseDatatableView):
+    model = Convention
+    columns = ['name', 'date_start', 'date_end', 'society', 'date_created', 'date_updated', 'action']
+    order_columns = ['name', 'date_start', 'date_end', 'society', 'date_created', 'date_updated', '']
+
+    # exclude is_archived = True in datatables
+    def get_initial_queryset(self):
+        return Convention.objects.all()
+    
+    def get_filter_method(self):
+        """ Returns preferred filter method """
+        return self.FILTER_ICONTAINS
+
+    def filter_queryset(self, qs):
+        search = self.request.GET.get('search[value]', None)
+
+        if search:
+            search_parts = search.split(' ')
+            qs_params = None
+            for part in search_parts:
+                q = Q(name__icontains=part)|Q(date_start__icontains=part)|Q(date_end__icontains=part)|Q(society__name__icontains=part)
+                qs_params = qs_params & q if qs_params else q
+            qs = qs.filter(qs_params)
+        return qs
+
+    def render_column(self, row, column):
+        if column == 'action':
+            return """
+                <button class='btn btn-default m-0 p-0 js-update-convention' data-url='/convention/%s/update/' data-toggle='tooltip' title='Update'>
+                    <i class='far fa-edit text-primary'></i>
+                </button>
+            """ % (row.convention_id) # create action buttons
+        elif column == 'date_created':
+            return "%s" % localtime(row.date_created).strftime("%Y-%m-%d %H:%M") # format date_created to "YYYY-MM-DD HH:mm"
+        elif column == 'date_updated':
+            # return "%s" % row.date_updated.strftime("%Y-%m-%d %H:%M") # format date_updated to "YYYY-MM-DD HH:mm"
+            return "%s" % localtime(row.date_updated).strftime("%Y-%m-%d %H:%M") # format date_updated to "YYYY-MM-DD HH:mm"
+        else:
+            return super(ConventionListJson, self).render_column(row, column)
+
+def convention_list(request):
+    return render(request, 'core/convention_list.html', {})
+# CONVENTION END
