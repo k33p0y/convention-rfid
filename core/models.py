@@ -25,7 +25,7 @@ class Membership(models.Model):
 
 class Participant(models.Model):
     participant_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    rfid = models.CharField('RFID', max_length=15, unique=True)
+    # rfid = models.CharField('RFID', max_length=15, unique=True)
     fname = models.CharField('First name', max_length=100)
     mname = models.CharField('Middle name', max_length=100, blank=True)
     lname = models.CharField('Last name', max_length=100)
@@ -52,3 +52,13 @@ class Convention(models.Model):
 
     def __str__(self):
         return self.name
+
+class Rfid(models.Model):
+    rfid_uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    rfid = models.CharField('RFID', max_length=15, unique=True)
+    participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s - %s %s' % (self.rfid, self.participant.fname, self.participant.lname)
