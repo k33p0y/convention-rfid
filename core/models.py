@@ -32,10 +32,13 @@ class Participant(models.Model):
     prc_num = models.CharField('PRC', max_length=15, unique=True)
     birthdate = models.DateField(blank=True)
     address = models.TextField(blank=True)
-    society = models.ForeignKey(Society, on_delete=models.SET_NULL, null=True, blank=True, related_name='societies')
-    membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, blank=True, related_name='memberships')
+    society = models.ForeignKey(Society, on_delete=models.SET_NULL, null=True, blank=True, related_name='participants')
+    membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s %s' % (self.fname, self.lname)
 
 class Convention(models.Model):
     convention_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -45,3 +48,6 @@ class Convention(models.Model):
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
