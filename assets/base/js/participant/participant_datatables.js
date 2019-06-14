@@ -1,14 +1,14 @@
 $(document).ready(function() {
     var dt_table = $('#table-participant').DataTable({
         language: dt_language,  // global variable defined in html
-        order: [[ 9, "desc" ]],
+        order: [[ 7, "desc" ]],
         lengthMenu: [[25, 50, 100, 200], [25, 50, 100, 200]],
         columnDefs: [
             {
                 orderable: true,
                 searchable: true,
                 className: "center",
-                targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                targets: [0, 1, 2, 3, 4, 5, 6, 7]
             },
             {
                 orderable: false,

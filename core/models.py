@@ -25,15 +25,12 @@ class Membership(models.Model):
 
 class Participant(models.Model):
     participant_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    # rfid = models.CharField('RFID', max_length=15, unique=True)
     fname = models.CharField('First name', max_length=100)
     mname = models.CharField('Middle name', max_length=100, blank=True)
     lname = models.CharField('Last name', max_length=100)
     prc_num = models.CharField('PRC#', max_length=15, unique=True)
     birthdate = models.DateField(blank=True, null=True)
     address = models.TextField(blank=True)
-    society = models.ForeignKey(Society, on_delete=models.SET_NULL, null=True, blank=True, related_name='participants')
-    membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -57,6 +54,8 @@ class Rfid(models.Model):
     rfid_uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     rfid = models.CharField('RFID', max_length=15, unique=True)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
+    society = models.ForeignKey(Society, on_delete=models.SET_NULL, null=True, blank=True)
+    membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 

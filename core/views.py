@@ -136,8 +136,8 @@ def membership_update(request, uuid):
 # PARTICIPANT START
 class ParticipantListJson(BaseDatatableView):
     model = Participant
-    columns = ['fname', 'mname', 'lname', 'prc_num', 'birthdate', 'address', 'society', 'membership', 'date_created', 'date_updated', 'action']
-    order_columns = ['fname', 'mname', 'lname', 'prc_num', 'birthdate', 'address', 'society', 'membership', 'date_created', 'date_updated', '']
+    columns = ['fname', 'mname', 'lname', 'prc_num', 'birthdate', 'address', 'date_created', 'date_updated', 'action']
+    order_columns = ['fname', 'mname', 'lname', 'prc_num', 'birthdate', 'address', 'date_created', 'date_updated', '']
 
     # exclude is_archived = True in datatables
     def get_initial_queryset(self):
@@ -154,7 +154,7 @@ class ParticipantListJson(BaseDatatableView):
             search_parts = search.split(' ')
             qs_params = None
             for part in search_parts:
-                q = Q(fname__icontains=part)|Q(mname__icontains=part)|Q(lname__icontains=part)|Q(address__icontains=part)|Q(prc_num__icontains=part)|Q(birthdate__icontains=part)|Q(address__icontains=part)|Q(society__name__icontains=part)|Q(membership__name__icontains=part)  
+                q = Q(fname__icontains=part)|Q(mname__icontains=part)|Q(lname__icontains=part)|Q(address__icontains=part)|Q(prc_num__icontains=part)|Q(birthdate__icontains=part)|Q(address__icontains=part)
                 qs_params = qs_params & q if qs_params else q
             qs = qs.filter(qs_params)
         return qs
