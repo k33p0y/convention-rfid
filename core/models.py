@@ -52,7 +52,7 @@ class Convention(models.Model):
 
 class Rfid(models.Model):
     rfid_uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    rfid = models.CharField('RFID', max_length=15, unique=True)
+    rfid_num = models.CharField('RFID', max_length=15, unique=True)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     society = models.ForeignKey(Society, on_delete=models.SET_NULL, null=True, blank=True)
     membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, blank=True)
