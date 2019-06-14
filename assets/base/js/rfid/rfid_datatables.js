@@ -47,6 +47,13 @@ $(function () {
                     {title: 'Membership', data: 'membership__name'},
                     {title: 'Date created', data: 'date_created'},
                     {title: 'Last updated', data: 'date_updated'},
+                    {title: 'Action', render: function ( data, type, row ) {
+                        return `
+                            <button class='btn btn-default m-0 p-0 js-update-society' data-url='/convention/rfid/${row.rfid_uuid}/update/' data-toggle='tooltip' title='Update'>
+                                <i class='far fa-edit text-primary'></i>
+                            </button>
+                        `;
+                    } },
                 ]
             });
         },
