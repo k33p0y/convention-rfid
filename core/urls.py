@@ -23,6 +23,7 @@ urlpatterns += [
     path('participant-list-json/', views.ParticipantListJson.as_view(), name='participant_list_json'),
     path('participant/create/', views.participant_create, name='participant_create'),
     path('participant/<uuid:uuid>/update/', views.participant_update, name='participant_update'),
+    path('participant/<uuid:uuid>/view-details/', views.participant_view_details, name='participant_view_details'),
 ]
 
 # CONVENTION
@@ -31,4 +32,9 @@ urlpatterns += [
     path('list-json/', views.ConventionListJson.as_view(), name='convention_list_json'),
     path('create/', views.convention_create, name='convention_create'),
     path('<uuid:uuid>/update/', views.convention_update, name='convention_update'),
+]
+
+# RFID
+urlpatterns += [
+    path('<uuid:uuid>/rfids/json/', views.get_rfids_json, name='get_rfids_json'),
 ]

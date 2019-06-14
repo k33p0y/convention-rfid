@@ -60,4 +60,4 @@ class Rfid(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.rfid
+        return self.rfid_num

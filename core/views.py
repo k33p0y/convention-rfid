@@ -4,7 +4,7 @@ from django.template.loader import render_to_string
 from django.db.models import Q
 from django.utils.timezone import localtime
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from .models import Participant, Convention, Society, Membership
+from .models import Participant, Convention, Society, Membership, Rfid
 from .forms import SocietyForm, MembershipForm, ParticipantForm, ConventionForm
 
 # Generic form save
@@ -165,7 +165,10 @@ class ParticipantListJson(BaseDatatableView):
                 <button class='btn btn-default m-0 p-0 js-update-participant' data-url='/convention/participant/%s/update/' data-toggle='tooltip' title='Update'>
                     <i class='far fa-edit text-primary'></i>
                 </button>
-            """ % (row.participant_id) # create action buttons
+                <a class='btn btn-default m-0 p-0 js-view-cost-center' href='/convention/participant/%s/view-details/' data-toggle='tooltip' title='View Details'>
+                    <i class='far fa-eye text-primary'></i>
+                </a>
+            """ % (row.participant_id, row.participant_id) # create action buttons
         elif column == 'date_created':
             return "%s" % localtime(row.date_created).strftime("%Y-%m-%d %H:%M") # format date_created to "YYYY-MM-DD HH:mm"
         elif column == 'date_updated':
@@ -191,6 +194,14 @@ def participant_update(request, uuid):
     else:
         form = ParticipantForm(instance=participant)
     return save_form(request, form, 'core/participant/partial_participant_update.html')
+
+def participant_view_details(request, uuid):
+    participant = get_object_or_404(Participant, participant_id=uuid)
+    rfids = participant.rfid_set.select_related('society', 'membership', 'participant').all()
+    context = {
+        'participant': participant,
+    }
+    return render(request, 'core/participant/view_details.html', context)
 # PARTICIPANT END
 
 # CONVENTION START
@@ -252,3 +263,11 @@ def convention_update(request, uuid):
         form = ConventionForm(instance=convention)
     return save_form(request, form, 'core/convention/partial_convention_update.html')
 # CONVENTION END
+
+# RFID START
+def get_rfids_json(request, uuid):
+    participant = get_object_or_404(Participant, participant_id=uuid)
+    rfids = participant.rfid_set.select_related('society', 'membership').values('rfid_uuid', 'rfid_num', 'society__name', 'membership__name', 'date_created', 'date_updated')
+
+    return JsonResponse(list(rfids), safe=False)
+# RFID END
