@@ -232,11 +232,22 @@ class ConventionListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
+            # set open/close icon and tooltip
+            if row.is_open:
+                icon = '<i class="fas fa-lock-open text-primary"></i>'
+                tooltip = 'Close'
+            else:
+                icon = '<i class="fas fa-lock text-danger"></i>'
+                tooltip = 'Open'
+
             return """
                 <button class='btn btn-default m-0 p-0 js-update-convention' data-url='/convention/%s/update/' data-toggle='tooltip' title='Update'>
                     <i class='far fa-edit text-primary'></i>
+                </button> 
+                <button class='btn btn-default m-0 p-0 js-open-close-convention' data-url='/convention/open-close/' data-toggle='tooltip' title='%s'>
+                    %s
                 </button>
-            """ % (row.convention_id) # create action buttons
+            """ % (row.convention_id, tooltip, icon) # create action buttons
         elif column == 'date_created':
             return "%s" % localtime(row.date_created).strftime("%Y-%m-%d %H:%M") # format date_created to "YYYY-MM-DD HH:mm"
         elif column == 'date_updated':
