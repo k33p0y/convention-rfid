@@ -38,7 +38,7 @@ $(function (){
                 {title: 'Last updated', data: 'date_updated'},
                 {title: 'Action', render: function ( data, type, row ) {
                     return `
-                        <button class='btn btn-default m-0 p-0 js-update-society' data-url='/convention/rfid/${row.rfid_uuid}/update/' data-toggle='tooltip' title='Update'>
+                        <button class='btn btn-default m-0 p-0 js-update-rfid' data-url='/convention/rfid/${row.rfid_uuid}/update/' data-toggle='tooltip' title='Update'>
                             <i class='far fa-edit text-primary'></i>
                         </button>
                     `;
@@ -134,11 +134,11 @@ $(function (){
         return false;
     };
 
-    // Create participant
+    // Create rfid
     $(".js-create-rfid").click(loadForm);
     $("#modal-rfid").on("submit", ".js-rfid-create-form", saveForm);
 
-    // Update participant
-    // $("#table-participant").on("click", ".js-update-participant", loadForm);
-    // $("#modal-participant").on("submit", ".js-participant-update-form", saveForm);
+    // Update rfid
+    $("#table-rfid").on("click", ".js-update-rfid", loadForm);
+    $("#modal-rfid").on("submit", ".js-rfid-update-form", saveForm);
 });

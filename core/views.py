@@ -273,17 +273,18 @@ def get_rfids_json(request, uuid):
 
 def rfid_create(request):
     data = dict()
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST':
         form = RfidForm(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
-            # part = str(request.POST.get('participant_id'))
+            # get participant
             participant_id = request.POST['participant_id']
             participant = Participant.objects.get(participant_id=participant_id)
-
-            print(participant.participant_id)
+            
             obj.participant = participant
             obj.save()
+
+            # get all rfids of partipant
             rfids = participant.rfid_set.select_related('society', 'membership').values('rfid_uuid', 'rfid_num', 'society__name', 'membership__name', 'date_created', 'date_updated')
             data['form_is_valid'] = True
             data['rfids'] = list(rfids)
@@ -293,6 +294,33 @@ def rfid_create(request):
         form = RfidForm()
     context = {'form': form}
     template_name = 'core/rfid/partial_rfid_create.html'
+    data['html_form'] = render_to_string(template_name, context, request)
+
+    return JsonResponse(data)
+
+def rfid_update(request, uuid):
+    data = dict()
+    rfid = get_object_or_404(Rfid, rfid_uuid=uuid)
+    if request.method == 'POST':
+        form = RfidForm(request.POST, instance=rfid)
+        if form.is_valid():
+            obj = form.save()
+
+            # get participant
+            participant = Participant.objects.get(participant_id=obj.participant.participant_id)
+            
+            # get rfids all rfids of participant
+            rfids = participant.rfid_set.select_related('society', 'membership').values('rfid_uuid', 'rfid_num', 'society__name', 'membership__name', 'date_created', 'date_updated')
+            
+            data['form_is_valid'] = True
+            data['rfids'] = list(rfids)
+        else:
+            data['form_is_valid'] = False
+    else:
+        form = RfidForm(instance=rfid)
+
+    context = {'form': form}
+    template_name = 'core/rfid/partial_rfid_update.html'
     data['html_form'] = render_to_string(template_name, context, request)
 
     return JsonResponse(data)
