@@ -244,10 +244,10 @@ class ConventionListJson(BaseDatatableView):
                 <button class='btn btn-default m-0 p-0 js-update-convention' data-url='/convention/%s/update/' data-toggle='tooltip' title='Update'>
                     <i class='far fa-edit text-primary'></i>
                 </button> 
-                <button class='btn btn-default m-0 p-0 js-open-close-convention' data-url='/convention/open-close/' data-toggle='tooltip' title='%s'>
+                <button class='btn btn-default m-0 p-0 js-open-close-convention' data-url='/convention/%s/toggle/open-close/' data-toggle='tooltip' title='%s'>
                     %s
                 </button>
-            """ % (row.convention_id, tooltip, icon) # create action buttons
+            """ % (row.convention_id, row.convention_id, tooltip, icon) # create action buttons
         elif column == 'date_created':
             return "%s" % localtime(row.date_created).strftime("%Y-%m-%d %H:%M") # format date_created to "YYYY-MM-DD HH:mm"
         elif column == 'date_updated':
@@ -273,6 +273,28 @@ def convention_update(request, uuid):
     else:
         form = ConventionForm(instance=convention)
     return save_form(request, form, 'core/convention/partial_convention_update.html')
+
+def toggle_convention_open_close(request, uuid):
+    data = dict()
+    convention = get_object_or_404(Convention, convention_id=uuid)
+
+    if request.method == 'POST':
+        if convention.is_open:
+            convention.is_open = False
+            convention.save()
+        else:
+            Convention.objects.filter(is_open=True).update(is_open=False)
+            convention.is_open = True
+            convention.save()
+        data['form_is_valid'] = True
+    else:
+        data['name'] = convention.name
+        data['is_open'] = convention.is_open
+
+    context = {'convention': convention}
+    template_name = 'core/convention/partial_convention_toggle_open_close.html'
+    data['html_form'] = render_to_string(template_name, context, request)
+    return JsonResponse(data)
 # CONVENTION END
 
 # RFID START

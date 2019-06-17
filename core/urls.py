@@ -32,6 +32,7 @@ urlpatterns += [
     path('list-json/', views.ConventionListJson.as_view(), name='convention_list_json'),
     path('create/', views.convention_create, name='convention_create'),
     path('<uuid:uuid>/update/', views.convention_update, name='convention_update'),
+    path('<uuid:uuid>/toggle/open-close/', views.toggle_convention_open_close, name='toggle_convention_open_close'),
 ]
 
 # RFID
