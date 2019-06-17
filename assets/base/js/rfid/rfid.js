@@ -1,6 +1,12 @@
 $(function (){
     // load DataTable function
     function loadDataTable (response) {
+        // format datetime
+        for (i=0; i<response.length; i++){
+            response[i].date_created = moment(response[i].date_created).format('YYYY-MM-DD HH:mm')
+            response[i].date_updated = moment(response[i].date_updated).format('YYYY-MM-DD HH:mm')
+        }
+
         $('#table-rfid').DataTable({
             order: [[ 4, "desc" ]],
             // lengthMenu: [[25, 50, 100, 200], [25, 50, 100, 200]],
@@ -22,6 +28,9 @@ $(function (){
                 },
                 {
                     responsivePriority: 2, targets: -1
+                },
+                {
+                    responsivePriority: 3, targets: -2
                 }
             ],
             searching: true,
