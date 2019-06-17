@@ -1,5 +1,5 @@
 from django import forms
-from .models import Society, Membership, Convention, Participant
+from .models import Society, Membership, Convention, Participant, Rfid
 
 class SocietyForm(forms.ModelForm):
     class Meta:
@@ -46,3 +46,8 @@ class ConventionForm(forms.ModelForm):
     class Meta:
         model = Convention
         fields = ('name', 'date_start', 'date_end', 'society')
+
+class RfidForm(forms.ModelForm):
+    class Meta:
+        model = Rfid
+        fields = ('rfid_num', 'society', 'membership')

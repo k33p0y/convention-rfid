@@ -37,4 +37,5 @@ urlpatterns += [
 # RFID
 urlpatterns += [
     path('<uuid:uuid>/rfids/json/', views.get_rfids_json, name='get_rfids_json'),
+    path('rfid/create/', views.rfid_create, name='rfid_create'),
 ]

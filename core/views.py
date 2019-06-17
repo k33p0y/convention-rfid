@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.utils.timezone import localtime
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from .models import Participant, Convention, Society, Membership, Rfid
-from .forms import SocietyForm, MembershipForm, ParticipantForm, ConventionForm
+from .forms import SocietyForm, MembershipForm, ParticipantForm, ConventionForm, RfidForm
 
 # Generic form save
 def save_form(request, form, template_name):
@@ -270,4 +270,30 @@ def get_rfids_json(request, uuid):
     rfids = participant.rfid_set.select_related('society', 'membership').values('rfid_uuid', 'rfid_num', 'society__name', 'membership__name', 'date_created', 'date_updated')
 
     return JsonResponse(list(rfids), safe=False)
+
+def rfid_create(request):
+    data = dict()
+    if request.method == 'POST' and request.is_ajax():
+        form = RfidForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            # part = str(request.POST.get('participant_id'))
+            participant_id = request.POST['participant_id']
+            participant = Participant.objects.get(participant_id=participant_id)
+
+            print(participant.participant_id)
+            obj.participant = participant
+            obj.save()
+            rfids = participant.rfid_set.select_related('society', 'membership').values('rfid_uuid', 'rfid_num', 'society__name', 'membership__name', 'date_created', 'date_updated')
+            data['form_is_valid'] = True
+            data['rfids'] = list(rfids)
+        else:
+            data['form_is_valid'] = False
+    else:
+        form = RfidForm()
+    context = {'form': form}
+    template_name = 'core/rfid/partial_rfid_create.html'
+    data['html_form'] = render_to_string(template_name, context, request)
+
+    return JsonResponse(data)
 # RFID END

@@ -16,7 +16,7 @@
 {% block js %}
     <script src="{% static 'dataTables-1.10.19/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'dataTables-1.10.19/responsive-2.2.2/dataTables.responsive.min.js' %}"></script>
-    <script src="{% static 'base/js/rfid/rfid_datatables.js' %}"></script>
+    <script src="{% static 'base/js/rfid/rfid.js'%}"></script>
 {% endblock %}
 
 {% block content %}
@@ -61,7 +61,10 @@
         <!-- Area Chart -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">RFIDs</h6>
+                <button type="button" class="btn btn-outline-primary btn-sm js-create-rfid"
+                data-url="{% url 'rfid_create' %}">
+                    Add RFID Number
+                </button>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -92,7 +95,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modal-participant" tabindex="-1" role="dialog" aria-labelledby="modal-participant" aria-hidden="true">
+<div class="modal fade" id="modal-rfid" tabindex="-1" role="dialog" aria-labelledby="modal-rfid" aria-hidden="true">
   <div class="modal-dialog" role="document">
       <div class="modal-content">
           
