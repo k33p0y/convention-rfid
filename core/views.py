@@ -283,7 +283,7 @@ def toggle_convention_open_close(request, uuid):
             convention.is_open = False
             convention.save()
         else:
-            Convention.objects.filter(is_open=True).update(is_open=False)
+            # Convention.objects.filter(is_open=True).update(is_open=False)
             convention.is_open = True
             convention.save()
         data['form_is_valid'] = True
