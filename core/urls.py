@@ -33,6 +33,7 @@ urlpatterns += [
     path('create/', views.convention_create, name='convention_create'),
     path('<uuid:uuid>/update/', views.convention_update, name='convention_update'),
     path('<uuid:uuid>/toggle/open-close/', views.toggle_convention_open_close, name='toggle_convention_open_close'),
+    path('<uuid:convention_uuid>/', views.participant_attendance, name='participant_attendance'),
 ]
 
 # RFID

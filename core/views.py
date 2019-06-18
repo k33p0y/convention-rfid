@@ -243,11 +243,14 @@ class ConventionListJson(BaseDatatableView):
             return """
                 <button class='btn btn-default m-0 p-0 js-update-convention' data-url='/convention/%s/update/' data-toggle='tooltip' title='Update'>
                     <i class='far fa-edit text-primary'></i>
-                </button> 
+                </button>
+                <a class='btn btn-default m-0 p-0' href='/convention/%s/' data-toggle='tooltip' title='Attendance'>
+                    <i class="fas fa-stopwatch text-primary"></i>
+                </a>
                 <button class='btn btn-default m-0 p-0 js-open-close-convention' data-url='/convention/%s/toggle/open-close/' data-toggle='tooltip' title='%s'>
                     %s
                 </button>
-            """ % (row.convention_id, row.convention_id, tooltip, icon) # create action buttons
+            """ % (row.convention_id, row.convention_id, row.convention_id, tooltip, icon) # create action buttons
         elif column == 'date_created':
             return "%s" % localtime(row.date_created).strftime("%Y-%m-%d %H:%M") # format date_created to "YYYY-MM-DD HH:mm"
         elif column == 'date_updated':
@@ -358,3 +361,12 @@ def rfid_update(request, uuid):
 
     return JsonResponse(data)
 # RFID END
+
+# ATTENDANCE START
+def participant_attendance(request, convention_uuid):
+    convention = get_object_or_404(Convention, convention_id=convention_uuid)
+    context = {
+        'convention': convention
+    }
+    return render(request, 'core/attendance/attendance.html', context)
+# ATTENDANCE END

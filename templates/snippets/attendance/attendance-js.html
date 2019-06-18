@@ -1,0 +1,54 @@
+{% load static %}
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'sb_admin/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'sb_admin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'sb_admin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{% static 'sb_admin/js/sb-admin-2.min.js' %}"></script>
+
+<!-- Sweetalert2 -->
+<script src="{% static 'sweetalert2-8.8.5/js/sweetalert2.all.min.js' %}"></script>
+
+<!-- Display user fullname in navbar -->
+<script>
+    $(function (){
+        var fname = '{{request.user.first_name}}'.toLowerCase();
+        var lname = '{{request.user.last_name}}'.toLowerCase();
+        $('#fname_format').text(fname.charAt(0).toUpperCase() + fname.slice(1));
+        $('#lname_format').text(lname.charAt(0).toUpperCase() + lname.slice(1));
+    });
+</script>
+
+<!-- Sweetalert2 logout modal -->
+<script>
+    $(function () {
+        $('#logout_alert').click(function () {
+            Swal.fire({
+                title: 'Ready to Leave?',
+                text: 'Click "Logout" below to end your current session.',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Logout'
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = '/accounts/logout/?next={{request.path}}'
+                }
+            })
+        });
+    });
+</script>
+
+<!-- Tooltip -->
+<!--
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+-->
