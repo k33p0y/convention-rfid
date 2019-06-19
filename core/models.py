@@ -66,7 +66,8 @@ class Attendance(models.Model):
     attendance_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     rfid = models.ForeignKey(Rfid, on_delete=models.CASCADE)
     convention = models.ForeignKey(Convention, on_delete=models.CASCADE)
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateField(auto_now_add=True)
+    time_created = models.TimeField(auto_now_add=True)
     is_time_in = models.BooleanField(default=True)
 
     def __str__(self):
