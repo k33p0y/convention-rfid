@@ -369,8 +369,13 @@ def rfid_update(request, uuid):
 # ATTENDANCE START
 def participant_attendance(request, convention_uuid):
     convention = get_object_or_404(Convention, convention_id=convention_uuid)
+    registered_participants = Rfid.objects.filter(society=convention.society).count()
+    checked_in_participants = Attendance.objects.filter(convention=convention).values('rfid').distinct().count()
+
     context = {
-        'convention': convention
+        'convention': convention,
+        'registered_participants': registered_participants,
+        'checked_in_participants': checked_in_participants
     }
     return render(request, 'core/attendance/attendance.html', context)
 

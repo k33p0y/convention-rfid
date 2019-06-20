@@ -20,13 +20,31 @@
 {% block content %}
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <!-- <h1 class="h3 mb-0 text-gray-800">{{convention.name}}</h1> -->
+        <h1 class="h3 mb-0 text-danger">
+            Swipe card to Check-{% if convention.is_open %}in{% else %}out{% endif %}!
+        </h1>
         <input type="hidden" id="convention_id" value="{{convention.convention_id}}">
         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
     <!-- Content Row -->
     <div class="row">
+        <!-- Overview -->
+        <div class="col-sm-12 mb-2">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Overview</h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <p style="font-size: 2.5em" class="text-capitalize text-primary font-weight-bolder mb-0">{{convention.name}}</p>
+                        <p style="font-size: 1.5em" class="text-capitalize text-primary font-weight-bolder">{{convention.society}}</p>
+                        <!-- <p style="font-size: 2em" class="text-primary font-weight-bolder mb-0">Swipe card to check-in.</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- DATE -->
         <div class="col-xl-3 col-md-6 mb-2">
             <div class="card border-left-primary shadow h-100 py-2">
@@ -47,11 +65,11 @@
 
         <!-- TIME -->
         <div class="col-xl-3 col-md-6 mb-2">
-            <div class="card border-left-danger shadow h-100 py-2">
+            <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Time</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Time</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800" id="convention_current_time"></div>
                         </div>
                         <div class="col-auto">
@@ -64,12 +82,12 @@
 
         <!-- REGISTERED PARTICIPANTS -->
         <div class="col-xl-3 col-md-6 mb-2">
-            <div class="card border-left-info shadow h-100 py-2">
+            <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Registered Participants</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">1000</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Registered Participants</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{registered_participants}}</div>
                         </div>
                         <div class="col-auto">
                             <!-- <i class="fas fa-dollar-sign fa-2x text-gray-300"></i> -->
@@ -83,12 +101,12 @@
 
         <!-- ATTENDEES -->
         <div class="col-xl-3 col-md-6 mb-2">
-            <div class="card border-left-success shadow h-100 py-2">
+            <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Attendees</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">990</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Attendees</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{checked_in_participants}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-male fa-2x text-gray-300"></i>
@@ -97,25 +115,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-sm-12">
-            <!-- Illustrations -->
-            <div class="card shadow mb-2">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Overview</h6>
-                </div>
-                <div class="card-body">
-                    <div class="text-center">
-                        <!-- <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="img/undraw_posting_photo.svg" alt=""> -->
-                        <p style="font-size: 3em" class="text-capitalize text-primary font-weight-bolder">{{convention.name}}</p>
-                        <p style="font-size: 2em" class="text-capitalize text-primary font-weight-bolder">{{convention.society}}</p>
-                    </div>
-                    <!-- <p>Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a constantly updated collection of beautiful svg images that you can use completely free and without attribution!</p>
-                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on unDraw &rarr;</a> -->
-                </div>
-            </div>
-    
         </div>
     </div>
     <!-- Content Row -->
