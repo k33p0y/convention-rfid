@@ -54,7 +54,7 @@ class Rfid(models.Model):
     rfid_uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     rfid_num = models.CharField('RFID', max_length=15, unique=True)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
-    society = models.ForeignKey(Society, on_delete=models.SET_NULL, null=True, blank=True)
+    society = models.ForeignKey(Society, on_delete=models.CASCADE)
     membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
