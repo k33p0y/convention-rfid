@@ -42,3 +42,8 @@ urlpatterns += [
     path('rfid/create/', views.rfid_create, name='rfid_create'),
     path('rfid/<uuid:uuid>/update/', views.rfid_update, name='rfid_update'),
 ]
+
+# ATTENDANCE
+urlpatterns += [
+    path('<uuid:convention_uuid>/create-or-update/attendance/', views.create_or_update_attendance, name='create_or_update_attendance'),
+]

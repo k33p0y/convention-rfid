@@ -1,11 +1,15 @@
+import datetime
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import localtime
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from .models import Participant, Convention, Society, Membership, Rfid
+from .models import Participant, Convention, Society, Membership, Rfid, Attendance
 from .forms import SocietyForm, MembershipForm, ParticipantForm, ConventionForm, RfidForm
+
+now = datetime.datetime.now()
 
 # Generic form save
 def save_form(request, form, template_name):
@@ -369,4 +373,64 @@ def participant_attendance(request, convention_uuid):
         'convention': convention
     }
     return render(request, 'core/attendance/attendance.html', context)
+
+@csrf_exempt
+def create_or_update_attendance(request, convention_uuid):
+    data = dict()
+    convention = get_object_or_404(Convention, convention_id=convention_uuid)
+    # get rfid from post form
+    rfid_post = request.POST.get('rfid')
+
+    # check if participant is registered to the convention
+    try:
+        rfid = Rfid.objects.get(society=convention.society.society_id, rfid_num__iexact=rfid_post)
+        data['rfid'] = True
+
+        # if convention is OPEN
+        if convention.is_open:
+            data['convention_is_open'] = True
+            attendance_list = Attendance.objects.select_related('rfid', 'convention').filter(
+                    rfid=rfid, convention=convention, is_time_in=True,
+                    date_created__year=now.year, date_created__month=now.month, date_created__day=now.day)      
+
+            # if attendance exists
+            if attendance_list:
+                data['participant']= participant_json(attendance_list[0])
+            # if attendance does not exists, create new attendance
+            else:
+                attendance = Attendance(rfid=rfid, convention=convention, is_time_in=True)
+                attendance.save()
+                data['participant']= participant_json(attendance)
+        
+        # if convention is CLOSE
+        else:
+            data['convention_is_open'] = False
+            attendance_list = Attendance.objects.select_related('rfid', 'convention').filter(
+                    rfid=rfid, convention=convention, is_time_in=False,
+                    date_created__year=now.year, date_created__month=now.month, date_created__day=now.day)      
+
+            # if attendance exists
+            if attendance_list:
+                data['participant']= participant_json(attendance_list[0])
+            # if attendance does not exists, create new attendance
+            else:
+                attendance = Attendance(rfid=rfid, convention=convention, is_time_in=False)
+                attendance.save()
+                data['participant']= participant_json(attendance)
+    
+    # participant is not registered
+    except Rfid.DoesNotExist:
+        data['rfid'] = False
+
+    return JsonResponse(data)
+
+def participant_json(obj):
+    participant = {
+        'attendance_uuid': obj.attendance_id,
+        'rfid_num': obj.rfid.rfid_num,
+        'fname': obj.rfid.participant.fname,
+        'mname': obj.rfid.participant.mname,
+        'lname': obj.rfid.participant.lname,
+    }
+    return participant
 # ATTENDANCE END
