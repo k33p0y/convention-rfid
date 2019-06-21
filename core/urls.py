@@ -46,4 +46,5 @@ urlpatterns += [
 # ATTENDANCE
 urlpatterns += [
     path('<uuid:convention_uuid>/create-or-update/attendance/', views.create_or_update_attendance, name='create_or_update_attendance'),
+    path('<uuid:convention_uuid>/get-participants/count/', views.get_participant_count_json, name='get_participant_count_json'),
 ]

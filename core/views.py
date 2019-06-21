@@ -438,4 +438,14 @@ def participant_json(obj):
         'lname': obj.rfid.participant.lname,
     }
     return participant
+
+def get_participant_count_json(request, convention_uuid):
+    data = dict()
+    convention = get_object_or_404(Convention, convention_id=convention_uuid)
+    registered_participants = Rfid.objects.filter(society=convention.society).count()
+    checked_in_participants = Attendance.objects.filter(convention=convention).values('rfid').distinct().count()
+    data['convention_is_open'] = convention.is_open
+    data['registered_participants'] = registered_participants
+    data['checked_in_participants'] = checked_in_participants
+    return JsonResponse(data)
 # ATTENDANCE END
