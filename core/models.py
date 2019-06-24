@@ -68,7 +68,7 @@ class Attendance(models.Model):
     convention = models.ForeignKey(Convention, on_delete=models.CASCADE)
     date_created = models.DateField(auto_now_add=True)
     check_in = models.TimeField(auto_now_add=True)
-    check_out = models.TimeField()
+    check_out = models.TimeField(blank=True, null=True)
     # is_time_in = models.BooleanField(default=True)
 
     def __str__(self):
