@@ -15,6 +15,9 @@
     <script src="{% static 'sweetalert2-8.8.5/js/sweetalert2.all.min.js' %}"></script>
     <script src="{% static 'moment-2.24.0/moment.min.js' %}"></script>
     <script src="{% static 'base/js/attendance/attendance.js' %}"></script>
+    <!-- <script src="{% static 'jsPDF-1.5.3/jspdf.min.js' %}"></script>
+    <script src="{% static 'jspdf-autotable-3.1.1/jspdf.plugin.autotable.js' %}"></script>
+    <script src="{% static 'base/js/attendance/generate_report.js' %}"></script> -->
 {% endblock %}
 
 {% block content %}
@@ -24,7 +27,7 @@
             Swipe card to Check-<span id="convention_check_in"></span>!
         </h1>
         <input type="hidden" id="convention_id" value="{{convention.convention_id}}">
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+        <!-- <a href="#" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
     </div>
 
     <!-- Content Row -->
@@ -33,7 +36,8 @@
         <div class="col-sm-12 mb-2">
             <div class="card shadow">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Overview</h6>
+                    <!-- <h6 class="m-0 font-weight-bold text-primary">Overview</h6> -->
+                    <button type="button" id="generate-pdf" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</button>
                 </div>
                 <div class="card-body">
                     <div class="text-center">

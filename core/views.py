@@ -9,8 +9,6 @@ from django_datatables_view.base_datatable_view import BaseDatatableView
 from .models import Participant, Convention, Society, Membership, Rfid, Attendance
 from .forms import SocietyForm, MembershipForm, ParticipantForm, ConventionForm, RfidForm
 
-now = datetime.datetime.now()
-
 # Generic form save
 def save_form(request, form, template_name):
     data = dict()
@@ -391,37 +389,29 @@ def create_or_update_attendance(request, convention_uuid):
         rfid = Rfid.objects.get(society=convention.society.society_id, rfid_num__iexact=rfid_post)
         data['rfid'] = True
 
-        # if convention is OPEN
-        if convention.is_open:
-            data['convention_is_open'] = True
-            attendance_list = Attendance.objects.select_related('rfid', 'convention').filter(
-                    rfid=rfid, convention=convention, is_time_in=True,
-                    date_created__year=now.year, date_created__month=now.month, date_created__day=now.day)      
+        # check if participant attendance exists
+        try:
+            attendance = Attendance.objects.get(rfid=rfid,
+                convention=convention,
+                date_created__year=datetime.datetime.now().year,
+                date_created__month=datetime.datetime.now().month,
+                date_created__day=datetime.datetime.now().day)
 
-            # if attendance exists
-            if attendance_list:
-                data['participant']= participant_json(attendance_list[0])
-            # if attendance does not exists, create new attendance
-            else:
-                attendance = Attendance(rfid=rfid, convention=convention, is_time_in=True)
+            # if convention is closed, set attendance.check_out to current time
+            if convention.is_open == False and attendance.check_out == None:
+                attendance.check_out = datetime.datetime.now().time()
                 attendance.save()
-                data['participant']= participant_json(attendance)
+                data['convention_is_open'] = False
+            elif convention.is_open:
+                data['convention_is_open'] = True
+            data['participant']= participant_json(attendance)
         
-        # if convention is CLOSE
-        else:
-            data['convention_is_open'] = False
-            attendance_list = Attendance.objects.select_related('rfid', 'convention').filter(
-                    rfid=rfid, convention=convention, is_time_in=False,
-                    date_created__year=now.year, date_created__month=now.month, date_created__day=now.day)      
-
-            # if attendance exists
-            if attendance_list:
-                data['participant']= participant_json(attendance_list[0])
-            # if attendance does not exists, create new attendance
-            else:
-                attendance = Attendance(rfid=rfid, convention=convention, is_time_in=False)
-                attendance.save()
-                data['participant']= participant_json(attendance)
+        # participant attendance does not exist, create attendance
+        except Attendance.DoesNotExist:
+            attendance = Attendance(rfid=rfid, convention=convention)
+            attendance.save()
+            data['convention_is_open'] = True   
+            data['participant']= participant_json(attendance)
     
     # participant is not registered
     except Rfid.DoesNotExist:
@@ -448,4 +438,13 @@ def get_participant_count_json(request, convention_uuid):
     data['registered_participants'] = registered_participants
     data['checked_in_participants'] = checked_in_participants
     return JsonResponse(data)
+
+# def generate_attendance(request, convention_uuid):
+#     data = dict()
+#     convention = get_object_or_404(Convention, convention_id=convention_uuid)
+#     attendance = Attendance.objects.filter(convention=convention).values(
+#         'rfid__rfid_num', 'rfid__participant__fname', 'rfid__participant__mname', 'rfid__participant__lname', 'time_created'
+#     )[:1]
+#     attendance_list = list(attendance)
+#     return JsonResponse(attendance_list, safe=False)
 # ATTENDANCE END
