@@ -67,8 +67,9 @@ class Attendance(models.Model):
     rfid = models.ForeignKey(Rfid, on_delete=models.CASCADE)
     convention = models.ForeignKey(Convention, on_delete=models.CASCADE)
     date_created = models.DateField(auto_now_add=True)
-    time_created = models.TimeField(auto_now_add=True)
-    is_time_in = models.BooleanField(default=True)
+    check_in = models.TimeField(auto_now_add=True)
+    check_out = models.TimeField()
+    # is_time_in = models.BooleanField(default=True)
 
     def __str__(self):
         return '%s-%s' % (self.rfid, self.convention)
