@@ -439,12 +439,12 @@ def get_participant_count_json(request, convention_uuid):
     data['checked_in_participants'] = checked_in_participants
     return JsonResponse(data)
 
-# def generate_attendance(request, convention_uuid):
-#     data = dict()
-#     convention = get_object_or_404(Convention, convention_id=convention_uuid)
-#     attendance = Attendance.objects.filter(convention=convention).values(
-#         'rfid__rfid_num', 'rfid__participant__fname', 'rfid__participant__mname', 'rfid__participant__lname', 'time_created'
-#     )[:1]
-#     attendance_list = list(attendance)
-#     return JsonResponse(attendance_list, safe=False)
+def generate_attendance_json(request, convention_uuid):
+    convention = get_object_or_404(Convention, convention_id=convention_uuid)
+    attendance = Attendance.objects.select_related('rfid__participant', 'convention').filter(convention=convention).values(
+        'rfid__participant__fname', 'rfid__participant__mname', 'rfid__participant__lname', 'rfid__participant__prc_num', 'check_in', 'check_out', 'date_created'
+    )
+
+    attendance_list = list(attendance)
+    return JsonResponse(attendance_list, safe=False)
 # ATTENDANCE END
