@@ -127,7 +127,7 @@ $(function (){
                 }
                 else {
                     // show forms errors in modal
-                    $("#modal-rfid .modal-content").html(data.html_form);
+                    $("#modal-rfid .modal-content").html(response.html_form);
                 }
             },
             error: function (xhr, status, error) {
