@@ -52,13 +52,16 @@ class Convention(models.Model):
 
 class Rfid(models.Model):
     rfid_uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    rfid_num = models.CharField('RFID', max_length=15, unique=True)
+    rfid_num = models.CharField('RFID', max_length=15)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
     membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-
+    
+    class Meta:
+        unique_together = ('rfid_num', 'society',)
+    
     def __str__(self):
         return self.rfid_num
 
@@ -69,7 +72,6 @@ class Attendance(models.Model):
     date_created = models.DateField(auto_now_add=True)
     check_in = models.TimeField(auto_now_add=True)
     check_out = models.TimeField(blank=True, null=True)
-    # is_time_in = models.BooleanField(default=True)
 
     def __str__(self):
         return '%s-%s' % (self.rfid, self.convention)
