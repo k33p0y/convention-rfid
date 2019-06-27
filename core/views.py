@@ -21,6 +21,23 @@ def save_form(request, form, template_name):
     context = {'form': form}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
+
+# participant with rfid form save
+def save_participant_and_rfid_form(request, participant_form, rfid_form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if participant_form.is_valid() and rfid_form.is_valid():
+            participant_obj = participant_form.save()
+            rfid_obj = rfid_form.save(commit=False)
+            rfid_obj.participant = participant_obj
+            rfid_obj.save()
+
+            data['form_is_valid'] = True
+        else:
+            data['form_is_valid'] = False
+    context = {'participant_form': participant_form, 'rfid_form': rfid_form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
     
 def home(request):
     return render(request, 'index.html', {})
@@ -184,10 +201,12 @@ def participant_list(request):
 
 def participant_create(request):
     if request.method == 'POST':
-        form = ParticipantForm(request.POST)
+        participant_form = ParticipantForm(request.POST)
+        rfid_form = RfidForm(request.POST)
     else:
-        form = ParticipantForm()
-    return save_form(request, form, 'core/participant/partial_participant_create.html')
+        participant_form = ParticipantForm()
+        rfid_form = RfidForm()
+    return save_participant_and_rfid_form(request, participant_form, rfid_form, 'core/participant/partial_participant_create.html')
 
 def participant_update(request, uuid):
     participant = get_object_or_404(Participant, participant_id=uuid)
