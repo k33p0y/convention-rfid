@@ -49,3 +49,9 @@ urlpatterns += [
     path('<uuid:convention_uuid>/get-participants/count/', views.get_participant_count_json, name='get_participant_count_json'),
     path('<uuid:convention_uuid>/generate/attendance/json/', views.generate_attendance_json, name='generate_attendance_json'),
 ]
+
+# CERTIFICATE
+urlpatterns += [
+    path('<uuid:convention_uuid>/certificate/', views.participant_generate_certificate, name='participant_generate_certificate'),
+    path('<uuid:convention_uuid>/certificate/generate/', views.get_participant_json, name='get_participant_json'),
+]

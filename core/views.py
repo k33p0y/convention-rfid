@@ -8,7 +8,7 @@ from django.utils.timezone import localtime
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from .models import Participant, Convention, Society, Membership, Rfid, Attendance
 from .forms import SocietyForm, MembershipForm, ParticipantForm, ConventionForm, RfidForm
-
+    
 # Generic form save
 def save_form(request, form, template_name):
     data = dict()
@@ -265,13 +265,16 @@ class ConventionListJson(BaseDatatableView):
                 <button class='btn btn-default m-0 p-0 js-update-convention' data-url='/convention/%s/update/' data-toggle='tooltip' title='Update'>
                     <i class='far fa-edit text-primary'></i>
                 </button>
-                <a class='btn btn-default m-0 p-0' href='/convention/%s/' data-toggle='tooltip' title='Attendance'>
+                <a class='btn btn-default m-0 p-0' href='/convention/%s/' data-toggle='tooltip' target="_blank" title='Attendance'>
                     <i class="fas fa-stopwatch text-primary"></i>
+                </a>
+                <a class='btn btn-default m-0 p-0' href='/convention/%s/certificate/' target="_blank" data-toggle='tooltip' title='Certificate'>
+                    <i class="fas fa-print text-primary"></i>
                 </a>
                 <button class='btn btn-default m-0 p-0 js-open-close-convention' data-url='/convention/%s/toggle/open-close/' data-toggle='tooltip' title='%s'>
                     %s
                 </button>
-            """ % (row.convention_id, row.convention_id, row.convention_id, tooltip, icon) # create action buttons
+            """ % (row.convention_id, row.convention_id, row.convention_id, row.convention_id, tooltip, icon) # create action buttons
         elif column == 'date_created':
             return "%s" % localtime(row.date_created).strftime("%Y-%m-%d %H:%M") # format date_created to "YYYY-MM-DD HH:mm"
         elif column == 'date_updated':
@@ -467,3 +470,22 @@ def generate_attendance_json(request, convention_uuid):
     attendance_list = list(attendance)
     return JsonResponse(attendance_list, safe=False)
 # ATTENDANCE END
+
+# CERTIFICATE START
+def participant_generate_certificate(request, convention_uuid):
+    convention = get_object_or_404(Convention, convention_id=convention_uuid)
+    context = {
+        'convention': convention
+    }
+    template_name = 'core/participant_generate_certificate.html'
+    return render(request, template_name, context)
+
+def get_participant_json(request, convention_uuid):
+    data = dict()
+    convention = get_object_or_404(Convention, convention_id=convention_uuid)
+    # rfid = get_object_or_404(Rfid, society=convention.society, rfid_num=rfid_num)
+    
+    data['participant'] = 'Ronnel V. Lanaban'
+    return JsonResponse(data)
+
+# CERTIFICATE END

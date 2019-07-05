@@ -1,0 +1,48 @@
+{% extends 'attendance-base.html' %}
+
+{% block head_title %}Print Certificate | {{block.super}}{% endblock %}
+
+<!-- load static files -->
+{% load static %}
+
+<!-- Dynamic CSS import -->
+{% block css %}
+
+{% endblock %}
+
+<!-- Dynamic JS import -->
+{% block js %}
+    <script src="{% static 'sweetalert2-8.8.5/js/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'moment-2.24.0/moment.min.js' %}"></script>
+    <script src="{% static 'jsPDF-1.5.3/jspdf.min.js' %}"></script>
+    <script src="{% static 'jspdf-autotable-3.1.1/jspdf.plugin.autotable.js' %}"></script>
+    <script src="{% static 'base/js/attendance/generate-certificate.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <!-- <button class="btn btn-primary" id="generate-certificate">generate</button> -->
+
+
+    <!-- <div id="testDiv">
+        <p>Some text to pdf</p>
+        <table>
+            <tr>
+                <th>Month</th>
+                <th>Savings</th>
+            </tr>
+            <tr>
+                <td>January</td>
+                <td>$100</td>
+            </tr>
+            <tr>
+                <td>February</td>
+                <td>$80</td>
+            </tr>
+        </table>
+    </div>
+    <button id="generate">PDF</button> -->
+
+    <!-- <div id="hidden_div">
+        
+    </div> -->
+{% endblock %}
