@@ -53,5 +53,5 @@ urlpatterns += [
 # CERTIFICATE
 urlpatterns += [
     path('<uuid:convention_uuid>/certificate/', views.participant_generate_certificate, name='participant_generate_certificate'),
-    path('<uuid:convention_uuid>/certificate/generate/', views.get_participant_json, name='get_participant_json'),
+    path('<uuid:convention_uuid>/certificate/generate/<str:rfid>/', views.get_participant_json, name='get_participant_json'),
 ]

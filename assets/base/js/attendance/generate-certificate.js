@@ -2,7 +2,26 @@ $(function (){
     // focus cursor on search textbox
     $('.search-textbox', this).focus()
 
-    function generate_certificate(participant_name){
+    function process_name(obj) {
+        // name to array
+        var name = obj.trim().split(' ')
+
+        // remove white spaces
+        for (i=0; i<name.length; i++){
+            var index = name.indexOf('')
+            if (index > -1) name.splice(index, 1);
+        }
+
+        // capitalize first character
+        for (i=0; i<name.length; i++) name[i] = name[i].slice(0, 1).toUpperCase() + name[i].slice(1).toLowerCase();
+        
+        // name to string
+        name = name.join(' ')
+
+        return name
+    }
+
+    function generate_certificate(participant_name, convention_name, start_date, end_date){
         var doc = new jsPDF('landscape', 'pt', 'letter');
 
         // border
@@ -35,7 +54,8 @@ $(function (){
         doc.text(lines, 390, 230, 'center');
 
         // 'Event date and venue'
-        var text = 'for attending the Flat Earth Society Convention this 1st of November 2019 at Marco Polo Davao.'
+        var text = `for attending the ${convention_name} this ${start_date} at Marco Polo Davao.`;
+    
         text_lines = doc.splitTextToSize(text, 1200)
         doc.setFontSize(15);
         doc.setFont('courier');
@@ -64,21 +84,21 @@ $(function (){
         doc.setFontStyle("bold");
         doc.setFontSize(12);
         doc.setTextColor(242, 102, 58);
-        doc.text('RONNEL V. LANABAN', 155, 445);
-        doc.text('ELIJAH D. TANCIO', 520, 445);
+        doc.text('RONNEL V. LANABAN', 210, 445, {align: 'center'}); // left side name
+        doc.text('JOSE P. RIZAL', 568, 445, {align: 'center'}); // right side name
 
         // Designation
         doc.setFont("courier");
         doc.setFontStyle("normal");
         doc.setFontSize(10);
         doc.setTextColor(0);
-        doc.text('Social Media Manager', 157, 460);
-        doc.text('Marketing Manager', 525, 460);
+        doc.text('Social Media Manager', 210, 460, {align: 'center'}); // left side designation
+        doc.text('Marketing Manager', 568, 460, {align: 'center'}); // right side designation
 
         window.open(doc.output('bloburl'), '_blank');
     }
 
-    var generate =  function(e) {
+    var get_participant_json =  function(e) {
         e.preventDefault();
         var search_textbox = $('.search-textbox', this).val()
         
@@ -87,15 +107,43 @@ $(function (){
         $('.search-textbox', this).focus()
 
         $.ajax({
-            url: `generate/`,
+            url: `generate/${search_textbox}/`,
             type: 'get',
             datatype: 'json',
             beforeSend: function() {
                 
             },
             success: function(response) {
-                // generate_certificate();
-                generate_certificate(response.participant)
+                if (response.rfid_exist) {
+                    // get participant full name
+                    var fullname = '';
+                    var fname = process_name(response.participant_first_name)
+                    var lname = process_name(response.participant_last_name)
+                    var middle_initial = process_name(response.participant_middle_name)
+                    if (middle_initial) {
+                        middle_initial = middle_initial.slice(0, 1) + '.';
+                        fullname = fname + ' ' + middle_initial + ' ' + lname
+                    } else fullname = fname + ' ' + lname;
+                    
+                    // get start and end date
+                    var start_date = moment(response.convention_start_date).format('MMMM Do YYYY')
+                    var end_date = '';
+                    if (response.convention_end_date) {
+                        end_date = moment(response.convention_end_date).format('MMMM Do YYYY');
+                    }
+
+                    // get convention name
+                    var convention_name = process_name(response.convention_name)
+                    
+                    generate_certificate(fullname, convention_name, start_date, end_date)
+                } else {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong! Seems like you are not registered to this convention.',
+                        timer: 2000,
+                    })
+                }
             },
             error: function(xhr, status, error) {
                 Swal.fire({
@@ -108,6 +156,5 @@ $(function (){
         })
     }
 
-    // $('#generate-certificate').on('click', demoFromHTML)
-    $(".navbar-search-rfid-form").on("submit", generate)
+    $(".navbar-search-rfid-form").on("submit", get_participant_json)
 });

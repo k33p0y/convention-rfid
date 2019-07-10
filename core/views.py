@@ -480,12 +480,23 @@ def participant_generate_certificate(request, convention_uuid):
     template_name = 'core/participant_generate_certificate.html'
     return render(request, template_name, context)
 
-def get_participant_json(request, convention_uuid):
+def get_participant_json(request, convention_uuid, rfid):
     data = dict()
     convention = get_object_or_404(Convention, convention_id=convention_uuid)
     # rfid = get_object_or_404(Rfid, society=convention.society, rfid_num=rfid_num)
-    
-    data['participant'] = 'Ronnel V. Lanaban'
+    try:
+        rfid_obj = Rfid.objects.get(society=convention.society, rfid_num=rfid)
+
+        data['rfid_exist'] = True
+        data['participant_first_name'] = rfid_obj.participant.fname
+        data['participant_middle_name'] = rfid_obj.participant.mname
+        data['participant_last_name'] = rfid_obj.participant.lname
+        data['convention_name'] = convention.name
+        data['convention_start_date'] = convention.date_start
+        data['convention_end_date'] = convention.date_end
+    except Rfid.DoesNotExist:
+        data['rfid_exist'] = False
+
     return JsonResponse(data)
 
 # CERTIFICATE END
