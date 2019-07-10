@@ -271,10 +271,13 @@ class ConventionListJson(BaseDatatableView):
                 <a class='btn btn-default m-0 p-0' href='/convention/%s/certificate/' target="_blank" data-toggle='tooltip' title='Certificate'>
                     <i class="fas fa-print text-primary"></i>
                 </a>
+                <a class='btn btn-default m-0 p-0' href='/convention/%s/id-card/' target="_blank" data-toggle='tooltip' title='ID Card'>
+                    <i class="far fa-address-card  text-primary"></i>
+                </a>
                 <button class='btn btn-default m-0 p-0 js-open-close-convention' data-url='/convention/%s/toggle/open-close/' data-toggle='tooltip' title='%s'>
                     %s
                 </button>
-            """ % (row.convention_id, row.convention_id, row.convention_id, row.convention_id, tooltip, icon) # create action buttons
+            """ % (row.convention_id, row.convention_id, row.convention_id, row.convention_id, row.convention_id, tooltip, icon) # create action buttons
         elif column == 'date_created':
             return "%s" % localtime(row.date_created).strftime("%Y-%m-%d %H:%M") # format date_created to "YYYY-MM-DD HH:mm"
         elif column == 'date_updated':
@@ -494,9 +497,20 @@ def get_participant_json(request, convention_uuid, rfid):
         data['convention_name'] = convention.name
         data['convention_start_date'] = convention.date_start
         data['convention_end_date'] = convention.date_end
+        data['society'] = convention.society.name
+        data['prc_num'] = rfid_obj.participant.prc_num
     except Rfid.DoesNotExist:
         data['rfid_exist'] = False
 
     return JsonResponse(data)
 
 # CERTIFICATE END
+
+# ID CARD
+def participant_generate_id_card(request, convention_uuid):
+    convention = get_object_or_404(Convention, convention_id=convention_uuid)
+    context = {
+        'convention': convention
+    }
+    template_name = 'core/participant_generate_id_card.html'
+    return render(request, template_name, context)
