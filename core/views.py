@@ -499,6 +499,7 @@ def get_participant_json(request, convention_uuid, rfid):
         data['convention_end_date'] = convention.date_end
         data['society'] = convention.society.name
         data['prc_num'] = rfid_obj.participant.prc_num
+        data['venue'] = convention.venue
     except Rfid.DoesNotExist:
         data['rfid_exist'] = False
 

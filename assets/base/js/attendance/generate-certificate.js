@@ -21,7 +21,7 @@ $(function (){
         return name
     }
 
-    function generate_certificate(participant_name, convention_name, start_date, end_date){
+    function generate_certificate(participant_name, convention_name, start_date, end_date, venue){
         var doc = new jsPDF('landscape', 'pt', 'letter');
 
         // border
@@ -54,7 +54,7 @@ $(function (){
         doc.text(lines, 390, 230, 'center');
 
         // 'Event date and venue'
-        var text = `for attending the ${convention_name} this ${start_date} at Marco Polo Davao.`;
+        var text = `for attending the ${convention_name} this ${start_date} at ${venue}.`;
     
         text_lines = doc.splitTextToSize(text, 1200)
         doc.setFontSize(15);
@@ -134,8 +134,11 @@ $(function (){
 
                     // get convention name
                     var convention_name = process_name(response.convention_name)
+
+                    // get venue
+                    var venue = process_name(response.venue)
                     
-                    generate_certificate(fullname, convention_name, start_date, end_date)
+                    generate_certificate(fullname, convention_name, start_date, end_date, venue)
                 } else {
                     Swal.fire({
                         type: 'error',
