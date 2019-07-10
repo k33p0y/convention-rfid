@@ -228,8 +228,8 @@ def participant_view_details(request, uuid):
 # CONVENTION START
 class ConventionListJson(BaseDatatableView):
     model = Convention
-    columns = ['name', 'date_start', 'date_end', 'society', 'date_created', 'date_updated', 'action']
-    order_columns = ['name', 'date_start', 'date_end', 'society', 'date_created', 'date_updated', '']
+    columns = ['name', 'date_start', 'date_end', 'society', 'venue', 'date_created', 'date_updated', 'action']
+    order_columns = ['name', 'date_start', 'date_end', 'society', 'venue', 'date_created', 'date_updated', '']
 
     # exclude is_archived = True in datatables
     def get_initial_queryset(self):
@@ -246,7 +246,7 @@ class ConventionListJson(BaseDatatableView):
             search_parts = search.split(' ')
             qs_params = None
             for part in search_parts:
-                q = Q(name__icontains=part)|Q(date_start__icontains=part)|Q(date_end__icontains=part)|Q(society__name__icontains=part)
+                q = Q(name__icontains=part)|Q(date_start__icontains=part)|Q(date_end__icontains=part)|Q(society__name__icontains=part)|Q(venue__icontains=part)
                 qs_params = qs_params & q if qs_params else q
             qs = qs.filter(qs_params)
         return qs

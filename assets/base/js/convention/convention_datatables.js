@@ -1,14 +1,14 @@
 $(document).ready(function() {
     var dt_table = $('#table-convention').DataTable({
         language: dt_language,  // global variable defined in html
-        order: [[ 5, "desc" ]],
+        order: [[ 6, "desc" ]],
         lengthMenu: [[25, 50, 100, 200], [25, 50, 100, 200]],
         columnDefs: [
             {
                 orderable: true,
                 searchable: true,
                 className: "center",
-                targets: [0, 1, 2, 3, 4, 5]
+                targets: [0, 1, 2, 3, 4, 5, 6]
             },
             {
                 orderable: false,
@@ -21,7 +21,26 @@ $(document).ready(function() {
             },
             {
                 responsivePriority: 2, targets: -1
-            }
+            },
+            {
+                responsivePriority: 3, targets: 3
+            },
+            {
+                responsivePriority: 4, targets: 1
+            },
+            {
+                responsivePriority: 5, targets: 2
+            },
+            {
+                responsivePriority: 6, targets: 5
+            },
+            {
+                responsivePriority: 7, targets: 6
+            },
+            // venue
+            {
+                responsivePriority: 8, targets: 4
+            },
         ],
         searching: true,
         processing: true,
