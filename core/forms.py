@@ -31,7 +31,7 @@ class ParticipantForm(forms.ModelForm):
 
 class ConventionForm(forms.ModelForm):
     date_start = forms.DateField(
-        required=False,
+        required=True,
         widget=forms.TextInput(
             attrs={'type': 'date',},
         )

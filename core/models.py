@@ -40,7 +40,7 @@ class Participant(models.Model):
 class Convention(models.Model):
     convention_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=200)
-    date_start = models.DateField(blank=True, null=True)
+    date_start = models.DateField()
     date_end = models.DateField(blank=True, null=True)
     venue = models.TextField(max_length=250)
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
