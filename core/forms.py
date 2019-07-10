@@ -42,10 +42,16 @@ class ConventionForm(forms.ModelForm):
             attrs={'type': 'date',},
         )
     )
+    venue = forms.CharField(
+        required=True,
+        widget=forms.Textarea(
+            attrs={'rows': 2},
+        )
+    )
 
     class Meta:
         model = Convention
-        fields = ('name', 'date_start', 'date_end', 'society')
+        fields = ('name', 'date_start', 'date_end', 'society', 'venue')
 
 class RfidForm(forms.ModelForm):
     class Meta:

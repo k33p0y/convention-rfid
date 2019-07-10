@@ -42,6 +42,7 @@ class Convention(models.Model):
     name = models.CharField(max_length=200)
     date_start = models.DateField(blank=True, null=True)
     date_end = models.DateField(blank=True, null=True)
+    venue = models.TextField(max_length=250)
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
