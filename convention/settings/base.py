@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     # created apps
     'core',
+    'rfid',
 
     # third-party apps
     'crispy_forms',
