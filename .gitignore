@@ -5,3 +5,5 @@ venv/
 .env
 core/migrations/*.py
 !core/migrations/__init__.py
+rfid/migrations/*.py
+!rfid/migrations/__init__.py
