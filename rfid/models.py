@@ -44,7 +44,7 @@ class Convention(models.Model):
     date_end = models.DateField(blank=True, null=True)
     venue = models.TextField(max_length=250)
     is_open = models.BooleanField(default=True)
-    rfids = models.ManyToManyField(Rfid)
+    rfids = models.ManyToManyField(Rfid, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     
