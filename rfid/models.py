@@ -43,7 +43,7 @@ class Convention(models.Model):
     date_start = models.DateField()
     date_end = models.DateField(blank=True, null=True)
     venue = models.TextField(max_length=250)
-    is_open = models.BooleanField(default=True)
+    is_open = models.BooleanField(default=False)
     rfids = models.ManyToManyField(Rfid, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
@@ -51,13 +51,12 @@ class Convention(models.Model):
     def __str__(self):
         return self.name
 
-# class Attendance(models.Model):
-#     attendance_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     rfid = models.ForeignKey(Rfid, on_delete=models.CASCADE)
-#     convention = models.ForeignKey(Convention, on_delete=models.CASCADE)
-#     date_created = models.DateField(auto_now_add=True)
-#     check_in = models.TimeField(auto_now_add=True)
-#     check_out = models.TimeField(blank=True, null=True)
+class Attendance(models.Model):
+    rfid = models.ForeignKey(Rfid, on_delete=models.CASCADE)
+    convention = models.ForeignKey(Convention, on_delete=models.CASCADE)
+    date_created = models.DateField(auto_now_add=True)
+    check_in = models.TimeField(auto_now_add=True)
+    check_out = models.TimeField(blank=True, null=True)
 
-#     def __str__(self):
-#         return '%s-%s' % (self.rfid, self.convention)
+    def __str__(self):
+        return '%s-%s' % (self.rfid, self.convention)
