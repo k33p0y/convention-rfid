@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from .models import Convention
 from .forms import ParticipantForm, RfidForm
 
 def create_participant(request):
@@ -22,5 +23,14 @@ def create_participant(request):
     context = {
         'participant_form': participant_form,
         'rfid_form': rfid_form,
+    }
+    return render(request, template_name, context)
+
+def participant_check_in(request):
+    convention = get_object_or_404(Convention, is_open=True)
+    
+    template_name = 'rfid/participant_check_in.html'
+    context = {
+        
     }
     return render(request, template_name, context)
