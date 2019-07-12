@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from .forms import ParticipantForm, RfidForm
 
 def create_participant(request):
@@ -12,7 +13,7 @@ def create_participant(request):
             rfid_obj = rfid_form.save(commit=False)
             rfid_obj.participant = participant_obj
             rfid_obj.save()
-            
+            messages.success(request, 'Participant %s %s saved to database!' % (participant_obj.fname, participant_obj.lname))
             return redirect('create_participant')
     else:
         participant_form = ParticipantForm()
