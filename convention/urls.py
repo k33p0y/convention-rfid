@@ -23,6 +23,7 @@ urlpatterns = [
     path('', core_app_views.home, name='home'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('convention/', include('core.urls')),
+    path('', include('rfid.urls')),
     path('admin/', admin.site.urls),
 ]
 
