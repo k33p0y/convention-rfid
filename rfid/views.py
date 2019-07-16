@@ -40,8 +40,8 @@ def register_participant(request, convention_id):
     }
     return render(request, template_name, context)
 
-def participant_check_in(request):
-    convention = get_object_or_404(Convention, is_open=True)
+def participant_check_in(request, convention_id):
+    convention = get_object_or_404(Convention, id=convention_id)
     
     template_name = 'rfid/participant_check_in.html'
     context = {

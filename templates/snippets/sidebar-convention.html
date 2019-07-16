@@ -28,7 +28,7 @@
             <div class="bg-white py-2 collapse-inner rounded management_menu">
                 <!-- <h6 class="collapse-header">Custom Components:</h6> -->
                 <a class="collapse-item" href="{% url 'register_participant' convention_id=convention.id %}" target="_blank">Add Participant</a>
-                <a class="collapse-item" href="{% url 'participant_check_in' %}" target="_blank">Check-In</a>
+                <a class="collapse-item" href="{% url 'participant_check_in' convention_id=convention.id %}" target="_blank">Check-In</a>
                 <!-- <a class="collapse-item" href="">Conventions</a>
                 <a class="collapse-item" href="">Societies</a>
                 <a class="collapse-item" href="">Membership Types</a> -->
