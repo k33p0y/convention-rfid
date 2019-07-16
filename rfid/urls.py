@@ -11,4 +11,5 @@ urlpatterns = [
 urlpatterns += [
     path('convention-list-json/', views.ConventionListJson.as_view(), name='convention_list_json'),
     path('convention/list/', views.convention_list, name='convention_list'),
+    path('convention/<uuid:convention_id>/', views.convention_view, name='convention_view'),
 ]

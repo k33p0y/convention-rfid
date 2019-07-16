@@ -91,9 +91,9 @@ class ConventionListJson(BaseDatatableView):
     def render_column(self, row, column):
         if column == 'action':
             return """
-                <button class='btn btn-default m-0 p-0' data-url='/convention/%s/' data-toggle='tooltip' title='View'>
+                <a class='btn btn-default m-0 p-0' href='/convention/%s/' target="_blank" data-toggle='tooltip' title='View'>
                     <i class='far fa-eye text-primary'></i>
-                </button>
+                </a>
             """ % (row.id) # create action buttons
         elif column == 'date_updated':
             # return "%s" % row.date_updated.strftime("%Y-%m-%d %H:%M") # format date_updated to "YYYY-MM-DD HH:mm"
@@ -103,3 +103,12 @@ class ConventionListJson(BaseDatatableView):
 
 def convention_list(request):
     return render(request, 'rfid/convention_list.html', {})
+
+def convention_view(request, convention_id):
+    convention = get_object_or_404(Convention, id=convention_id)
+
+    template_name = 'rfid/convention/convention_view.html'
+    context = {
+        'convention': convention,
+    }
+    return render(request, template_name, context)
