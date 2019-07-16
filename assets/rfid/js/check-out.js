@@ -33,7 +33,7 @@ $(function (){
     function log_attendance(rfid_num){
         var convention_id = $('#convention_id').val();
         $.ajax({
-            url: `/convention/${convention_id}/${rfid_num}/check-in/`,
+            url: `/convention/${convention_id}/${rfid_num}/check-out/`,
             type: 'get',
             datatype: 'json',
             success: function (response){
@@ -42,7 +42,7 @@ $(function (){
                     Swal.fire({
                         // position: 'top-end',
                         type: 'success',
-                        title: `Welcome ${response.participant_name}!`,
+                        title: `Thank you for comming ${response.participant_name}!`,
                         showConfirmButton: false,
                         timer: 2000
                     });

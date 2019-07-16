@@ -1,0 +1,36 @@
+{% extends 'generic-user-base.html' %}
+
+{% block head_title %}Check-Out | {{block.super}}{% endblock %}
+
+<!-- Load static files -->
+{% load static %}
+
+<!-- Dynamic CSS import -->
+{% block css %}{% endblock %}
+
+<!-- Dynamic JS import -->
+{% block js %}
+    <script src="{% static 'moment-2.24.0/moment.min.js' %}"></script>
+    <script src="{% static 'rfid/js/check-out.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+        <div class="row justify-content-center">
+            <div class="col-md-8 mt-5">
+                {% include 'snippets/messages.html' %}
+                <div class="card bg-light">
+                    <div class="card-header font-weight-bold text-white bg-dark"><i class="far fa-clock"></i> Check-Out</div>
+                    <div class="card-body">
+                        <div class="mt-3 mb-3">
+                            <h1 class="text-primary text-center">{{convention}}</h1>
+                            <input type="hidden" id="convention_id" value="{{convention.id}}">
+                            <h2 class="text-dark text-center" id="convention_current_time"></h2>
+                            <h6 class="text-dark text-center font-weight-bold" id="convention_current_date"></h6>
+
+                            <h3 class="text-danger text-center mt-5">Swipe card to check-out.</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

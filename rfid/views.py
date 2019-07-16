@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib import messages
@@ -33,32 +34,71 @@ def register_participant(request, convention_id):
     else:
         participant_form = ParticipantForm()
         rfid_form = RfidForm()
-    template_name = 'rfid/participant_create.html'
+    template_name = 'rfid/participant-create.html'
     context = {
         'participant_form': participant_form,
         'rfid_form': rfid_form,
+        'convention': convention,
     }
     return render(request, template_name, context)
 
 def participant_check_in(request, convention_id):
     convention = get_object_or_404(Convention, id=convention_id)
     
-    template_name = 'rfid/participant_check_in.html'
+    template_name = 'rfid/participant-check-in.html'
     context = {
         'convention': convention
     }
     return render(request, template_name, context)
 
-def log_attendance(request, convention_id, rfid_num):
+def participant_check_out(request, convention_id):
+    convention = get_object_or_404(Convention, id=convention_id)
+    
+    template_name = 'rfid/participant-check-out.html'
+    context = {
+        'convention': convention
+    }
+    return render(request, template_name, context)
+
+def log_attendance_check_in(request, convention_id, rfid_num):
     data = dict()
     convention = get_object_or_404(Convention, id=convention_id)
     # rfids = convention.rfids.select_related('participant').all()
     if convention.rfids.filter(rfid_num=rfid_num).exists():
-        data['participant_exist'] = True
         rfid = get_object_or_404(Rfid, rfid_num=rfid_num)
-        attendance_obj = Attendance(convention=convention, rfid=rfid)
-        attendance_obj.save()
+        
+        try:
+            attendance = Attendance.objects.get(convention=convention, rfid=rfid)
 
+        except Attendance.DoesNotExist:
+            attendance_obj = Attendance(convention=convention, rfid=rfid)
+            attendance_obj.save()
+        
+        data['participant_exist'] = True
+        data['participant_name'] = rfid.participant.fname + ' ' + rfid.participant.lname
+    else:
+        data['participant_exist'] = False
+    
+    return JsonResponse(data)
+
+def log_attendance_check_out(request, convention_id, rfid_num):
+    data = dict()
+    convention = get_object_or_404(Convention, id=convention_id)
+    # rfids = convention.rfids.select_related('participant').all()
+    if convention.rfids.filter(rfid_num=rfid_num).exists():
+        rfid = get_object_or_404(Rfid, rfid_num=rfid_num)
+        
+        try:
+            attendance = Attendance.objects.get(convention=convention, rfid=rfid)
+            if not attendance.check_out:
+                attendance.check_out = datetime.datetime.now().time()
+                attendance.save()
+        
+        except Attendance.DoesNotExist:
+            attendance_obj = Attendance(convention=convention, rfid=rfid)
+            attendance_obj.save()
+
+        data['participant_exist'] = True
         data['participant_name'] = rfid.participant.fname + ' ' + rfid.participant.lname
     else:
         data['participant_exist'] = False
@@ -107,7 +147,7 @@ class ConventionListJson(BaseDatatableView):
             return super(ConventionListJson, self).render_column(row, column)
 
 def convention_list(request):
-    return render(request, 'rfid/convention_list.html', {})
+    return render(request, 'rfid/convention-list.html', {})
 
 def convention_view(request, convention_id):
     convention = get_object_or_404(Convention, id=convention_id)
