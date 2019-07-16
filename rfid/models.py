@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 class Society(models.Model):
@@ -39,6 +40,7 @@ class Rfid(models.Model):
         return self.rfid_num
 
 class Convention(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=250)
     date_start = models.DateField()
     date_end = models.DateField(blank=True, null=True)
