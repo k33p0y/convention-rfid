@@ -1,0 +1,109 @@
+{% extends 'base-v2.html' %}
+
+{% block head_title %}Conventions | {{block.super}}{% endblock %}
+
+<!-- load static files -->
+{% load static %}
+{% load i18n %}
+
+<!-- Dynamic CSS import -->
+{% block css %}
+    <link rel="stylesheet" href="{% static 'dataTables-1.10.19/jquery.dataTables.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dataTables-1.10.19/responsive-2.2.2/responsive.dataTables.min.css' %}">
+{% endblock %}
+
+<!-- Dynamic JS import -->
+{% block js %}
+    <script src="{% static 'dataTables-1.10.19/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'dataTables-1.10.19/responsive-2.2.2/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'rfid/js/convention-datatables.js' %}"></script>
+    <script>
+        var CONVENTION_LIST_JSON_URL = `{% url 'convention_list_json' %}`;
+        // translations for datatables
+
+        var dt_language = {
+            "emptyTable":     `{% trans "No data available in table" %}`,
+            "info":           `{% trans "Showing _START_ to _END_ of _TOTAL_ entries" %}`,
+            "infoEmpty":      `{% trans "Showing 0 to 0 of 0 entries" %}`,
+            "infoFiltered":   `{% trans "(filtered from _MAX_ total entries)" %}`,
+            "infoPostFix":    "",
+            "thousands":      ",",
+            "lengthMenu":     `{% trans "Show _MENU_ entries" %}`,
+            "loadingRecords": `{% trans "Loading..." %}`,
+            "processing":     `{% trans "<i class='fas fa-cog fa-spin text-primary'></i>" %}`,
+            "search":         `{% trans "Search:" %}`,
+            "zeroRecords":    `{% trans "No matching records found" %}`,
+            "paginate": {
+                "first":      `{% trans "First" %}`,
+                "last":       `{% trans "Last" %}`,
+                "next":       `{% trans "Next" %}`,
+                "previous":   `{% trans "Previous" %}`
+            },
+            "aria": {
+                "sortAscending":  "{% trans ': activate to sort column ascending' %}",
+                "sortDescending": "{% trans ': activate to sort column descending' %}"
+            }
+        }
+    </script>
+    <!-- <script src="{% static 'base/js/convention/convention.js'%}"></script> -->
+{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-2 text-gray-800">Convention</h1>
+<!-- <p class="mb-4">Below is the list of unarchived Categories. To see <span class="font-weight-bolder">archived</span> list, click
+  <a class="font-weight-bolder font-italic text-decoration-none" href="">
+      <i class="far fa-hand-point-right"></i> here</a>.
+</p> -->
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <button type="button" class="btn btn-outline-primary btn-sm js-create-convention"
+      data-url="">
+      Add Convention
+    </button>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table display responsive" id="table-convention" width="100%" cellspacing="0">
+        <thead>
+            <th>{% trans "Name" %}</th>
+            <th>{% trans "Start date" %}</th>
+            <th>{% trans "End date" %}</th>
+            <th>{% trans "Venue" %}</th>
+            <th>{% trans "Last Updated" %}</th>
+            <th>Actions</th>
+        </thead>
+        <tfoot>
+            <th>{% trans "Name" %}</th>
+            <th>{% trans "Start date" %}</th>
+            <th>{% trans "End date" %}</th>
+            <th>{% trans "Venue" %}</th>
+            <th>{% trans "Last Updated" %}</th>
+            <th>Actions</th>
+        </tfoot>
+        <tbody></tbody>
+          
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-convention" tabindex="-1" role="dialog" aria-labelledby="modal-convention" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          
+      </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-convention-open-close" tabindex="-1" role="dialog" aria-labelledby="modal-convention-open-close" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        
+      </div>
+  </div>
+</div>
+{% endblock %}

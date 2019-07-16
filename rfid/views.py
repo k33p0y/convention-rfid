@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib import messages
+from django.db.models import Q
+from django.utils.timezone import localtime
+from django_datatables_view.base_datatable_view import BaseDatatableView
 from .models import Convention, Rfid, Attendance
 from .forms import ParticipantForm, RfidForm
 
@@ -8,7 +11,7 @@ def home(request):
     template_name = 'home.html'
     context ={}
     return render(request, template_name, context)
-    
+
 def create_participant(request):
     if request.method == 'POST':
         participant_form = ParticipantForm(request.POST)
@@ -56,3 +59,47 @@ def log_attendance(request, convention_id, rfid_num):
         data['participant_exist'] = False
     
     return JsonResponse(data)
+
+class ConventionListJson(BaseDatatableView):
+    model = Convention
+    columns = ['name', 'date_start', 'date_end', 'venue', 'date_updated', 'action']
+    order_columns = ['name', 'date_start', 'date_start', 'venue', 'date_updated', '']
+
+    # exclude is_archived = True in datatables
+    def get_initial_queryset(self):
+        if self.request.user.is_superuser:
+            return Convention.objects.all()
+        else:
+            return Convention.objects.filter(is_open=True)
+    
+    def get_filter_method(self):
+        """ Returns preferred filter method """
+        return self.FILTER_ICONTAINS
+
+    def filter_queryset(self, qs):
+        search = self.request.GET.get('search[value]', None)
+
+        if search:
+            search_parts = search.split(' ')
+            qs_params = None
+            for part in search_parts:
+                q = Q(name__icontains=part)|Q(venue__icontains=part)
+                qs_params = qs_params & q if qs_params else q
+            qs = qs.filter(qs_params)
+        return qs
+
+    def render_column(self, row, column):
+        if column == 'action':
+            return """
+                <button class='btn btn-default m-0 p-0' data-url='/convention/%s/' data-toggle='tooltip' title='View'>
+                    <i class='far fa-eye text-primary'></i>
+                </button>
+            """ % (row.id) # create action buttons
+        elif column == 'date_updated':
+            # return "%s" % row.date_updated.strftime("%Y-%m-%d %H:%M") # format date_updated to "YYYY-MM-DD HH:mm"
+            return "%s" % localtime(row.date_updated).strftime("%Y-%m-%d %H:%M") # format date_updated to "YYYY-MM-DD HH:mm"
+        else:
+            return super(ConventionListJson, self).render_column(row, column)
+
+def convention_list(request):
+    return render(request, 'rfid/convention_list.html', {})

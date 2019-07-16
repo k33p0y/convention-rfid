@@ -20,9 +20,9 @@ from django.conf import settings
 from core import views as core_app_views
 
 urlpatterns = [
-    path('', core_app_views.home, name='home'),
+    # path('', core_app_views.home, name='home'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('convention/', include('core.urls')),
+    # path('convention/', include('core.urls')),
     path('', include('rfid.urls')),
     path('admin/', admin.site.urls),
 ]
