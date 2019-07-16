@@ -42,19 +42,19 @@ def register_participant(request, convention_id):
     }
     return render(request, template_name, context)
 
-def participant_check_in(request, convention_id):
+def load_check_in_page(request, convention_id):
     convention = get_object_or_404(Convention, id=convention_id)
     
-    template_name = 'rfid/participant-check-in.html'
+    template_name = 'rfid/attendance/attendance-check-in.html'
     context = {
         'convention': convention
     }
     return render(request, template_name, context)
 
-def participant_check_out(request, convention_id):
+def load_check_out_page(request, convention_id):
     convention = get_object_or_404(Convention, id=convention_id)
     
-    template_name = 'rfid/participant-check-out.html'
+    template_name = 'rfid/attendance/attendance-check-out.html'
     context = {
         'convention': convention
     }
@@ -147,7 +147,7 @@ class ConventionListJson(BaseDatatableView):
             return super(ConventionListJson, self).render_column(row, column)
 
 def convention_list(request):
-    return render(request, 'rfid/convention-list.html', {})
+    return render(request, 'rfid/convention/convention-list.html', {})
 
 def convention_view(request, convention_id):
     convention = get_object_or_404(Convention, id=convention_id)
