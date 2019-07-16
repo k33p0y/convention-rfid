@@ -4,6 +4,11 @@ from django.contrib import messages
 from .models import Convention, Rfid, Attendance
 from .forms import ParticipantForm, RfidForm
 
+def home(request):
+    template_name = 'home.html'
+    context ={}
+    return render(request, template_name, context)
+    
 def create_participant(request):
     if request.method == 'POST':
         participant_form = ParticipantForm(request.POST)

@@ -1,0 +1,57 @@
+{% extends 'base-v2.html' %}
+
+{% block head_title %}Home | {{block.super}}{% endblock %}
+
+<!-- Dynamic CSS import -->
+{% block css %}{% endblock %}
+
+<!-- Dynamic JS import -->
+{% block js %}{% endblock %}
+
+<!-- Main Content -->
+{% block content %}
+
+<!-- Heading -->
+<h1 class="h3 mb-4 text-gray-800">Society Convention</h1>
+<!-- End heading -->
+
+<!-- Background -->
+<!-- <div class="row">
+    <div class="col-xl-12 col-md-12 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-3">Lorem Ipsum</div>
+                        <div class="h6 mb-3 font-weight-bold text-gray-800">Lorem ipsum</div>
+                        <div class="h6 mb-3 font-weight-bold text-gray-800">Lorem ipsum.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- End background -->
+
+<!-- Developer -->
+<div class="row">
+    <div class="col-xl-12 col-md-12 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-3">Developed By</div>
+                        <div class="h6 mb-1 font-weight-bold text-gray-800">Integrated Hospital Operations and Management Program (IHOMP)</div>
+                        <div class="text-xs font-weight-bold text-gray-800">Software and Systems Development Unit (SSD)</div>
+                    </div>
+                    <div class="col-auto">
+                        <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
+                        <i class="fas fa-laptop-code fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End developer -->
+{% endblock %}
