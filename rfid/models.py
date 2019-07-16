@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 
 class Society(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=200, unique=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
@@ -14,6 +15,7 @@ class Society(models.Model):
         return self.name
 
 class Participant(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     fname = models.CharField('First name', max_length=100)
     mname = models.CharField('Middle name', max_length=100, blank=True)
     lname = models.CharField('Last name', max_length=100)
@@ -27,6 +29,7 @@ class Participant(models.Model):
         return '%s %s' % (self.fname, self.lname)
 
 class Rfid(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     rfid_num = models.CharField('RFID', max_length=15)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
@@ -54,6 +57,7 @@ class Convention(models.Model):
         return self.name
 
 class Attendance(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     rfid = models.ForeignKey(Rfid, on_delete=models.CASCADE)
     convention = models.ForeignKey(Convention, on_delete=models.CASCADE)
     date_created = models.DateField(auto_now_add=True)
