@@ -12,7 +12,8 @@ def home(request):
     context ={}
     return render(request, template_name, context)
 
-def create_participant(request):
+def register_participant(request, convention_id):
+    convention = get_object_or_404(Convention, id=convention_id)
     if request.method == 'POST':
         participant_form = ParticipantForm(request.POST)
         rfid_form = RfidForm(request.POST)
@@ -23,8 +24,12 @@ def create_participant(request):
             rfid_obj = rfid_form.save(commit=False)
             rfid_obj.participant = participant_obj
             rfid_obj.save()
+            
+            # associate rfid to convention
+            convention.rfids.add(rfid_obj)
+
             messages.success(request, 'Participant %s %s saved to database!' % (participant_obj.fname, participant_obj.lname))
-            return redirect('create_participant')
+            return redirect('register_participant', convention_id=convention.id)
     else:
         participant_form = ParticipantForm()
         rfid_form = RfidForm()
