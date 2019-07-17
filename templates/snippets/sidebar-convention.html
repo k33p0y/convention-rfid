@@ -30,11 +30,8 @@
                 <a class="collapse-item" href="{% url 'register_participant' convention_id=convention.id %}" target="_blank">Add Participant</a>
                 <a class="collapse-item" href="{% url 'load_check_in_page' convention_id=convention.id %}" target="_blank">Check-In</a>
                 <a class="collapse-item" href="{% url 'load_check_out_page' convention_id=convention.id %}" target="_blank">Check-Out</a>
-                <!-- <a class="collapse-item" href="">Conventions</a>
-                <a class="collapse-item" href="">Societies</a>
-                <a class="collapse-item" href="">Membership Types</a> -->
-                <!--<a class="collapse-item" href="#">Category</a>
-                <a class="collapse-item" href="#">Assistance</a> -->
+                <a class="collapse-item" href="{% url 'load_certificate_generation_page' convention_id=convention.id %}" target="_blank">Generate Certificate</a>
+                <a class="collapse-item" href="#" target="_blank">Generate Card</a>
             </div>
         </div>
     </li>

@@ -166,3 +166,35 @@ def generate_attendance_json(request, convention_id):
 
     attendance_list = list(attendance)
     return JsonResponse(attendance_list, safe=False)
+
+# get participant json
+def get_participant_json(request, convention_id, rfid_num):
+    data = dict()
+    convention = get_object_or_404(Convention, id=convention_id)
+    if convention.rfids.filter(rfid_num=rfid_num).exists():
+        rfid = get_object_or_404(Rfid, rfid_num=rfid_num)
+
+        data['participant_exist'] = True
+
+        firstname = rfid.participant.fname
+        lastname = rfid.participant.lname
+        middlename = rfid.participant.mname
+
+        if middlename:
+            data['participant_name'] = firstname + ' ' + middlename[0] + '. ' + lastname
+        else:
+            data['participant_name'] = firstname + ' ' + lastname
+    else:
+        data['participant_exist'] = False
+    
+    return JsonResponse(data)
+
+# load certificate generation page
+def load_certificate_generation_page(request, convention_id):
+    convention = get_object_or_404(Convention, id=convention_id)
+
+    template_name = 'rfid/generate-certificate.html'
+    context = {
+        'convention': convention
+    }
+    return render(request, template_name, context)
