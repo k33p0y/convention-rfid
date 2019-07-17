@@ -20,22 +20,48 @@
 
     <!-- Nav Item - Management Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#managementCollapse" aria-expanded="false" aria-controls="managementCollapse">
-            <i class="fas fa-clipboard"></i>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#registrationCollapse" aria-expanded="false" aria-controls="registrationCollapse">
+            <i class="fas fa-pen-alt"></i>
             <span>Registration</span>
         </a>
-        <div id="managementCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="registrationCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded management_menu">
                 <!-- <h6 class="collapse-header">Custom Components:</h6> -->
                 <a class="collapse-item" href="{% url 'register_participant' convention_id=convention.id %}" target="_blank">Add Participant</a>
+                
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Attendance Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#attendanceCollapse" aria-expanded="true" aria-controls="attendanceCollapse">
+            <i class="fas fa-clipboard"></i>
+            <span>Attendance</span>
+        </a>
+        <div id="attendanceCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{% url 'load_check_in_page' convention_id=convention.id %}" target="_blank">Check-In</a>
                 <a class="collapse-item" href="{% url 'load_check_out_page' convention_id=convention.id %}" target="_blank">Check-Out</a>
+                
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Print Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#printCollapse" aria-expanded="true" aria-controls="printCollapse">
+            <i class="fas fa-print"></i>
+            <span>Print</span>
+        </a>
+        <div id="printCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{% url 'load_certificate_generation_page' convention_id=convention.id %}" target="_blank">Generate Certificate</a>
                 <a class="collapse-item" href="{% url 'load_id_generation_page' convention_id=convention.id %}" target="_blank">Generate ID</a>
             </div>
         </div>
     </li>
-
+    
     <!-- Divider -->
     <hr class="sidebar-divider">
 
