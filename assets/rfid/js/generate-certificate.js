@@ -112,32 +112,7 @@ $(function (){
             },
             success: function(response) {
                 if (response.participant_exist) {
-                    // get participant full name
-                    // var fullname = '';
-                    // var fname = process_name(response.participant_first_name)
-                    // var lname = process_name(response.participant_last_name)
-                    // var middle_initial = process_name(response.participant_middle_name)
-                    // if (middle_initial) {
-                    //     middle_initial = middle_initial.slice(0, 1) + '.';
-                    //     fullname = fname + ' ' + middle_initial + ' ' + lname
-                    // } else fullname = fname + ' ' + lname;
-                    
-                    // // get start and end date
-                    // var start_date = moment(response.convention_start_date).format('MMMM Do YYYY')
-                    // var end_date = '';
-                    // if (response.convention_end_date) {
-                    //     end_date = moment(response.convention_end_date).format('MMMM Do YYYY');
-                    // }
-
-                    // // get convention name
-                    // var convention_name = process_name(response.convention_name)
-
-                    // // get venue
-                    // var venue = process_name(response.venue)
-                    
                     generate_certificate(response.participant_name)
-
-                    // console.log(response)
                 } else {
                     Swal.fire({
                         type: 'error',

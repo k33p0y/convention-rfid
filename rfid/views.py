@@ -176,14 +176,12 @@ def get_participant_json(request, convention_id, rfid_num):
 
         data['participant_exist'] = True
 
-        firstname = rfid.participant.fname
-        lastname = rfid.participant.lname
-        middlename = rfid.participant.mname
-
-        if middlename:
-            data['participant_name'] = firstname + ' ' + middlename[0] + '. ' + lastname
+        if rfid.participant.mname:
+            data['participant_name'] = rfid.participant.fname + ' ' + rfid.participant.mname[0] + '. ' + rfid.participant.lname
         else:
-            data['participant_name'] = firstname + ' ' + lastname
+            data['participant_name'] = rfid.participant.fname + ' ' + rfid.participant.lname
+
+        data['prc_num'] = rfid.participant.prc_num
     else:
         data['participant_exist'] = False
     
@@ -194,6 +192,16 @@ def load_certificate_generation_page(request, convention_id):
     convention = get_object_or_404(Convention, id=convention_id)
 
     template_name = 'rfid/generate-certificate.html'
+    context = {
+        'convention': convention
+    }
+    return render(request, template_name, context)
+
+# load id generation page
+def load_id_generation_page(request, convention_id):
+    convention = get_object_or_404(Convention, id=convention_id)
+
+    template_name = 'rfid/generate-id.html'
     context = {
         'convention': convention
     }

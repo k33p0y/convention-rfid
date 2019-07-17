@@ -17,5 +17,6 @@ urlpatterns = [
     path('convention/<uuid:convention_id>/attendance/json/', views.generate_attendance_json, name='generate_attendance_json'), # get attendance json
     path('convention/<uuid:convention_id>/<str:rfid_num>/json/', views.get_participant_json, name='get_participant_json'), # get participant json
 
-    path('convention/<uuid:convention_id>/certificate/', views.load_certificate_generation_page, name='load_certificate_generation_page'), # load certificate generation page   
+    path('convention/<uuid:convention_id>/certificate/', views.load_certificate_generation_page, name='load_certificate_generation_page'), # load certificate generation page
+    path('convention/<uuid:convention_id>/id-card/', views.load_id_generation_page, name='load_id_generation_page'), # load certificate generation page
 ]
