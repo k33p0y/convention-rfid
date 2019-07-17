@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # created apps
-    'core',
     'rfid',
 
     # third-party apps

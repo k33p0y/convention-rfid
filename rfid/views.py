@@ -9,7 +9,7 @@ from .models import Convention, Rfid, Attendance
 from .forms import ParticipantForm, RfidForm
 
 def home(request):
-    template_name = 'home.html'
+    template_name = 'index.html'
     context ={}
     return render(request, template_name, context)
 
