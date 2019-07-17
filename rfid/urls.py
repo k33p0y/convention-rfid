@@ -8,6 +8,7 @@ urlpatterns = [
     path('convention/<uuid:convention_id>/check-out/', views.load_check_out_page, name='load_check_out_page'), # load check-out page
     path('convention/<uuid:convention_id>/<str:rfid_num>/check-in/', views.log_attendance_check_in, name='log_attendance_check_in'), # log attendance check-in
     path('convention/<uuid:convention_id>/<str:rfid_num>/check-out/', views.log_attendance_check_out, name='log_attendance_check_out'), # log attendance check-out
+    path('convention/<uuid:convention_id>/attendance/json/', views.generate_attendance_json, name='generate_attendance_json'),
 ]
 
 urlpatterns += [

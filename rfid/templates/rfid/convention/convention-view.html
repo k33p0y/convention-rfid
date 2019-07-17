@@ -1,6 +1,6 @@
 {% extends 'base/convention-base.html' %}
 
-{% block head_title %}Conventions | {{block.super}}{% endblock %}
+{% block head_title %}{{convention}} | {{block.super}}{% endblock %}
 
 <!-- load static files -->
 {% load static %}
@@ -12,11 +12,18 @@
 
 <!-- Dynamic JS import -->
 {% block js %}
-
+    <script src="{% static 'moment-2.24.0/moment.min.js' %}"></script>
+    <script src="{% static 'jsPDF-1.5.3/jspdf.min.js' %}"></script>
+    <script src="{% static 'jspdf-autotable-3.1.1/jspdf.plugin.autotable.js' %}"></script>
+    <script src="{% static 'rfid/js/generate-attendance.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-<h1 class="h3 mb-2 text-gray-800">{{convention}}</h1>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{convention}}</h1>
+    <input type="hidden" id="convention_name" value="{{convention}}">
+    <button type="button" id="generate-attendance" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Attendance</button>
+</div>
 
 <div class="row">
     <div class="col-xl-6 col-md-6 mb-2">

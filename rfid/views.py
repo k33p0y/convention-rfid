@@ -152,8 +152,17 @@ def convention_list(request):
 def convention_view(request, convention_id):
     convention = get_object_or_404(Convention, id=convention_id)
 
-    template_name = 'rfid/convention/convention_view.html'
+    template_name = 'rfid/convention/convention-view.html'
     context = {
         'convention': convention,
     }
     return render(request, template_name, context)
+
+def generate_attendance_json(request, convention_id):
+    convention = get_object_or_404(Convention, id=convention_id)
+    attendance = Attendance.objects.select_related('rfid__participant', 'convention').filter(convention=convention).values(
+        'rfid__participant__fname', 'rfid__participant__mname', 'rfid__participant__lname', 'rfid__participant__prc_num', 'check_in', 'check_out', 'date_created'
+    )
+
+    attendance_list = list(attendance)
+    return JsonResponse(attendance_list, safe=False)
