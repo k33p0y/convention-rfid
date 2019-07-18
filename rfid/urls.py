@@ -19,4 +19,7 @@ urlpatterns = [
 
     path('convention/<uuid:convention_id>/certificate/', views.load_certificate_generation_page, name='load_certificate_generation_page'), # load certificate generation page
     path('convention/<uuid:convention_id>/id-card/', views.load_id_generation_page, name='load_id_generation_page'), # load certificate generation page
+
+    path('participant-list-json/', views.ParticipantListJson.as_view(), name='participant_list_json'), # participant list json
+    path('participant/list/', views.participant_list, name='participant_list'), # load participant list page
 ]

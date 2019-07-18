@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.utils.timezone import localtime
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from .models import Convention, Rfid, Attendance
+from .models import Convention, Rfid, Attendance, Participant
 from .forms import ParticipantForm, RfidForm
 
 def home(request):
@@ -206,3 +206,50 @@ def load_id_generation_page(request, convention_id):
         'convention': convention
     }
     return render(request, template_name, context)
+
+# participant list json
+class ParticipantListJson(BaseDatatableView):
+    model = Participant
+    columns = ['prc_num', 'lname', 'fname', 'mname', 'birthdate', 'address', 'date_updated']
+    order_columns = ['prc_num', 'lname', 'fname', 'mname', 'birthdate', 'address', 'date_updated']
+
+    # exclude is_archived = True in datatables
+    def get_initial_queryset(self):
+        return Participant.objects.all()
+    
+    def get_filter_method(self):
+        """ Returns preferred filter method """
+        return self.FILTER_ICONTAINS
+
+    def filter_queryset(self, qs):
+        search = self.request.GET.get('search[value]', None)
+
+        if search:
+            search_parts = search.split(' ')
+            qs_params = None
+            for part in search_parts:
+                q = Q(prc_num__icontains=part)|Q(lname__icontains=part)|Q(fname__icontains=part)|Q(mname__icontains=part)|Q(birthdate__icontains=part)|Q(address__icontains=part)
+                qs_params = qs_params & q if qs_params else q
+            qs = qs.filter(qs_params)
+        return qs
+
+    def render_column(self, row, column):
+        # if column == 'date_updated':
+        #     return """
+        #         <a class='btn btn-default m-0 p-0' href='/convention/%s/' target="_blank" data-toggle='tooltip' title='View'>
+        #             <i class='far fa-eye text-primary'></i>
+        #         </a>
+        #     """ % (row.id) # create action buttons
+        
+        if column == 'birthdate':
+            # return "%s" % row.date_updated.strftime("%Y-%m-%d %H:%M") # format date_updated to "YYYY-MM-DD HH:mm"
+            return "%s" % localtime(row.date_updated).strftime("%Y-%m-%d") # format date_updated to "YYYY-MM-DD HH:mm"
+        elif column == 'date_updated':
+            # return "%s" % row.date_updated.strftime("%Y-%m-%d %H:%M") # format date_updated to "YYYY-MM-DD HH:mm"
+            return "%s" % localtime(row.date_updated).strftime("%Y-%m-%d %H:%M") # format date_updated to "YYYY-MM-DD HH:mm"
+        else:
+            return super(ParticipantListJson, self).render_column(row, column)
+
+# load participant list page
+def participant_list(request):
+    return render(request, 'rfid/participant/participant-list.html', {})

@@ -18,17 +18,31 @@
         <span>Home</span></a>
     </li>
 
-    <!-- Nav Item - Management Collapse Menu -->
+    <!-- Nav Item - Conventions Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#managementCollapse" aria-expanded="false" aria-controls="managementCollapse">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#conventionCollapse" aria-expanded="false" aria-controls="conventionCollapse">
             <i class="fas fa-clipboard"></i>
-            <span>Management</span>
+            <span>Conventions</span>
         </a>
-        <div id="managementCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="conventionCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded management_menu">
                 <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                <a class="collapse-item" href="{% url 'convention_list' %}">Conventions</a>
-                <a class="collapse-item" href="">Participants</a>
+                <a class="collapse-item" href="{% url 'convention_list' %}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Participants Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#participantCollapse" aria-expanded="false" aria-controls="participantCollapse">
+            <i class="fas fa-clipboard"></i>
+            <span>Participants</span>
+        </a>
+        <div id="participantCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded management_menu">
+                <!-- <h6 class="collapse-header">Custom Components:</h6> -->
+                <a class="collapse-item" href="{% url 'participant_list' %}">List</a>
+                <a class="collapse-item" href="#">Search</a>
             </div>
         </div>
     </li>
