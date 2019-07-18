@@ -1,0 +1,34 @@
+{% extends 'base/base-main.html' %}
+
+{% block head_title %}Search Participant | {{block.super}}{% endblock %}
+
+<!-- load static files -->
+{% load static %}
+
+<!-- Dynamic CSS import -->
+{% block css %}
+
+{% endblock %}
+
+<!-- Dynamic JS import -->
+{% block js %}
+
+{% endblock %}
+
+{% block content %}
+<!-- <h1 class="h3 mb-2 text-gray-800">Search Participant</h1> -->
+<!-- <p class="mb-4">Below is the list of unarchived Categories. To see <span class="font-weight-bolder">archived</span> list, click
+  <a class="font-weight-bolder font-italic text-decoration-none" href="">
+      <i class="far fa-hand-point-right"></i> here</a>.
+</p> -->
+<div class="row mx-lg-3 my-3">
+    <div class="input-group">
+        <input type="text" class="form-control border border-right-0" placeholder="Search Participant...">
+        <span class="input-group-append">
+            <button class="btn btn-outline-secondary border border-left-0" type="button">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+</div>
+{% endblock %}

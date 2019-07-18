@@ -253,3 +253,7 @@ class ParticipantListJson(BaseDatatableView):
 # load participant list page
 def participant_list(request):
     return render(request, 'rfid/participant/participant-list.html', {})
+
+# search participant
+def participant_search(request):
+    return render(request, 'rfid/participant/participant-search.html', {})

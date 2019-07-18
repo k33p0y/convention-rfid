@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.home, name='home'), # home page
     path('convention/<uuid:convention_id>/register/participant/', views.register_participant, name='register_participant'), # register participant
 
     path('convention-list-json/', views.ConventionListJson.as_view(), name='convention_list_json'), # convention list json
@@ -22,4 +22,5 @@ urlpatterns = [
 
     path('participant-list-json/', views.ParticipantListJson.as_view(), name='participant_list_json'), # participant list json
     path('participant/list/', views.participant_list, name='participant_list'), # load participant list page
+    path('participant/search/', views.participant_search, name='participant_search'), # search participant
 ]
