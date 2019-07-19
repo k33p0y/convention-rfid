@@ -254,6 +254,25 @@ class ParticipantListJson(BaseDatatableView):
 def participant_list(request):
     return render(request, 'rfid/participant/participant-list.html', {})
 
-# search participant
-def participant_search(request):
+# load participant search page
+def load_participant_search_page(request):
     return render(request, 'rfid/participant/participant-search.html', {})
+
+# participant convention list json
+def participant_conventions_json(request, prc_num):
+    data = dict()
+    rfid = Rfid.objects.filter(participant__prc_num__exact=prc_num)
+    if rfid:
+        data['participant_exist'] = True
+        participant = rfid[0]
+        conventions = rfid[0].convention_set.values('name', 'venue', 'date_start')
+
+        data['conventions'] = list(conventions)
+        data['participant_lname'] = rfid[0].participant.lname
+        data['participant_fname'] = rfid[0].participant.fname
+        data['participant_mname'] = rfid[0].participant.mname
+        data['participant_prc_num'] = rfid[0].participant.prc_num
+    else:
+        data['participant_exist'] = False
+    # data['test'] = True
+    return JsonResponse(data, safe=False)

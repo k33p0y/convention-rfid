@@ -22,5 +22,6 @@ urlpatterns = [
 
     path('participant-list-json/', views.ParticipantListJson.as_view(), name='participant_list_json'), # participant list json
     path('participant/list/', views.participant_list, name='participant_list'), # load participant list page
-    path('participant/search/', views.participant_search, name='participant_search'), # search participant
+    path('participant/search/', views.load_participant_search_page, name='load_participant_search_page'), # load participant search page
+    path('participant/search/<str:prc_num>/', views.participant_conventions_json, name='participant_conventions_json'), # participant convention list json
 ]
