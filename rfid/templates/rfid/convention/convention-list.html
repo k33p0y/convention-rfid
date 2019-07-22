@@ -49,7 +49,7 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="h3 mb-2 text-gray-800">Convention</h1>
+<!-- <h1 class="h3 mb-2 text-gray-800">Convention</h1> -->
 <!-- <p class="mb-4">Below is the list of unarchived Categories. To see <span class="font-weight-bolder">archived</span> list, click
   <a class="font-weight-bolder font-italic text-decoration-none" href="">
       <i class="far fa-hand-point-right"></i> here</a>.
@@ -63,6 +63,8 @@
         data-url="">
         Add Convention
       </button>
+    {% else %}
+      <span class="text-primary font-weight-bold">Open Conventions</span>
     {% endif %}
   </div>
   <div class="card-body">
