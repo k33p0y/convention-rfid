@@ -30,14 +30,14 @@ class Participant(models.Model):
 
 class Rfid(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    rfid_num = models.CharField('RFID', max_length=15)
+    rfid_num = models.CharField('RFID', max_length=15, unique=True)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     
-    class Meta:
-        unique_together = ('rfid_num', 'society',)
+    # class Meta:
+    #     unique_together = ('rfid_num', 'society',)
     
     def __str__(self):
         return self.rfid_num
