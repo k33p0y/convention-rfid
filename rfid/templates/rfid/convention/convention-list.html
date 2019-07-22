@@ -58,10 +58,12 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <button type="button" class="btn btn-outline-primary btn-sm js-create-convention"
-      data-url="">
-      Add Convention
-    </button>
+    {% if request.user.is_superuser %}
+      <button type="button" class="btn btn-outline-primary btn-sm js-create-convention"
+        data-url="">
+        Add Convention
+      </button>
+    {% endif %}
   </div>
   <div class="card-body">
     <div class="table-responsive">
