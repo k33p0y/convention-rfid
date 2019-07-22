@@ -17,7 +17,7 @@ class ParticipantForm(forms.ModelForm):
 
     class Meta:
         model = Participant
-        fields = ('fname', 'mname', 'lname', 'prc_num', 'birthdate', 'address')
+        fields = ('fname', 'mname', 'lname', 'prc_num', 'birthdate', 'address', 'occupation')
 
 class RfidForm(forms.ModelForm):
     class Meta:

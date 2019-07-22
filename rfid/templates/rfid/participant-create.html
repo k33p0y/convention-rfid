@@ -21,19 +21,22 @@
                         {% csrf_token %}
                         <div class="form-row">
                             <div class="form-group col-md-6 mb-0">
+                                {{ rfid_form.rfid_num|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-6 mb-0">
+                                {{ participant_form.prc_num|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-6 mb-0">
                                 {{ participant_form.lname|as_crispy_field }}
                             </div>
                             <div class="form-group col-md-6 mb-0">
                                 {{ participant_form.fname|as_crispy_field }}
                             </div>
-                            <div class="form-group col-md-4 mb-0">
+                            <div class="form-group col-md-6 mb-0">
                                 {{ participant_form.mname|as_crispy_field }}
                             </div>
-                            <div class="form-group col-md-4 mb-0">
-                                {{ participant_form.prc_num|as_crispy_field }}
-                            </div>
-                            <div class="form-group col-md-4 mb-0">
-                                {{ rfid_form.rfid_num|as_crispy_field }}
+                            <div class="form-group col-md-6 mb-0">
+                                {{ participant_form.occupation|as_crispy_field }}
                             </div>
                             <div class="form-group col-md-6 mb-0">
                                 {{ participant_form.birthdate|as_crispy_field }}
