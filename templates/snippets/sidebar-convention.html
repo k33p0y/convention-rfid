@@ -27,8 +27,8 @@
         <div id="registrationCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded management_menu">
                 <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                <a class="collapse-item" href="{% url 'register_participant' convention_id=convention.id %}" target="_blank">Add Participant</a>
-                
+                <a class="collapse-item" href="{% url 'register_participant' convention_id=convention.id %}" target="_blank">New Participant</a>
+                <a class="collapse-item" href="{% url 'load_existing_participant_register_page' convention_id=convention.id %}" target="_blank">Existing Participant</a>
             </div>
         </div>
     </li>

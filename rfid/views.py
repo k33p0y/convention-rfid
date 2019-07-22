@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib import messages
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import localtime
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from .models import Convention, Rfid, Attendance, Participant
@@ -261,18 +262,68 @@ def load_participant_search_page(request):
 # participant convention list json
 def participant_conventions_json(request, prc_num):
     data = dict()
-    rfid = Rfid.objects.filter(participant__prc_num__exact=prc_num)
+    rfid = Rfid.objects.filter(participant__prc_num__exact=prc_num).first()
     if rfid:
         data['participant_exist'] = True
-        participant = rfid[0]
-        conventions = rfid[0].convention_set.values('name', 'venue', 'date_start')
+        participant = rfid
+        conventions = rfid.convention_set.values('name', 'venue', 'date_start')
 
         data['conventions'] = list(conventions)
-        data['participant_lname'] = rfid[0].participant.lname
-        data['participant_fname'] = rfid[0].participant.fname
-        data['participant_mname'] = rfid[0].participant.mname
-        data['participant_prc_num'] = rfid[0].participant.prc_num
+        data['participant_lname'] = rfid.participant.lname
+        data['participant_fname'] = rfid.participant.fname
+        data['participant_mname'] = rfid.participant.mname
+        data['participant_prc_num'] = rfid.participant.prc_num
     else:
         data['participant_exist'] = False
     # data['test'] = True
     return JsonResponse(data, safe=False)
+
+# load register page for existing participant
+def load_existing_participant_register_page(request, convention_id):
+    convention = get_object_or_404(Convention, id=convention_id)
+
+    context = {
+        'convention': convention,
+    }
+    template_name = 'rfid/participant/participant-existing-register.html'
+    return render(request, template_name, context)
+
+# register existing participant to convention
+@csrf_exempt
+def register_existing_participant(request, convention_id, rfid_num):
+    data = dict()
+    convention = get_object_or_404(Convention, id=convention_id)
+    if request.method == 'POST' and request.is_ajax():
+        rfid_post_data = request.POST['rfid_num'] # get rfid post data
+        rfid = Rfid.objects.filter(rfid_num__exact=rfid_post_data).first()
+        if rfid:
+            data['participant_exist'] = True
+            if rfid.participant.mname:
+                data['participant_name'] = rfid.participant.fname + ' ' + rfid.participant.mname[0] + '. ' + rfid.participant.lname
+            else:
+                data['participant_name'] = rfid.participant.fname + ' ' + rfid.participant.lname
+            data['prc_num'] = rfid.participant.prc_num
+
+            # add participant to convention
+            convention.rfids.add(rfid)
+        else:
+            data['participant_exist'] = False
+
+    return JsonResponse(data)
+
+# check if rfid is registered
+def check_rfid(request, rfid_num):
+    data = dict()
+    rfid = Rfid.objects.filter(rfid_num__exact=rfid_num).first()
+    if rfid:
+        data['rfid_exist'] = True
+        if rfid.participant.mname:
+            data['participant_name'] = rfid.participant.fname + ' ' + rfid.participant.mname[0] + '. ' + rfid.participant.lname
+        else:
+            data['participant_name'] = rfid.participant.fname + ' ' + rfid.participant.lname
+        data['participant_prc_num'] = rfid.participant.prc_num
+        data['rfid_num'] = rfid.rfid_num
+    else:
+        data['rfid_exist'] = False
+
+    return JsonResponse(data)

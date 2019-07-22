@@ -4,6 +4,9 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'), # home page
     path('convention/<uuid:convention_id>/register/participant/', views.register_participant, name='register_participant'), # register participant
+    path('convention/<uuid:convention_id>/register/existing/participant/', views.load_existing_participant_register_page, name='load_existing_participant_register_page'), # register existing participant
+    path('convention/<uuid:convention_id>/register/existing/participant/<str:rfid_num>/', views.register_existing_participant, name='register_existing_participant'),
+    path('check/participant/<str:rfid_num>/', views.check_rfid, name='check_rfid'), # check if rfid number is registered
 
     path('convention-list-json/', views.ConventionListJson.as_view(), name='convention_list_json'), # convention list json
     path('convention/list/', views.convention_list, name='convention_list'), # load convention list page
@@ -15,7 +18,7 @@ urlpatterns = [
     path('convention/<uuid:convention_id>/<str:rfid_num>/check-out/', views.log_attendance_check_out, name='log_attendance_check_out'), # log attendance check-out
     
     path('convention/<uuid:convention_id>/attendance/json/', views.generate_attendance_json, name='generate_attendance_json'), # get attendance json
-    path('convention/<uuid:convention_id>/<str:rfid_num>/json/', views.get_participant_json, name='get_participant_json'), # get participant json
+    path('convention/<uuid:convention_id>/<str:rfid_num>/json/', views.get_participant_json, name='get_participant_json'), # get participant json, check if participant is registered to convention
 
     path('convention/<uuid:convention_id>/certificate/', views.load_certificate_generation_page, name='load_certificate_generation_page'), # load certificate generation page
     path('convention/<uuid:convention_id>/id-card/', views.load_id_generation_page, name='load_id_generation_page'), # load certificate generation page
