@@ -22,6 +22,7 @@ class Participant(models.Model):
     prc_num = models.CharField('PRC#', max_length=15, unique=True)
     birthdate = models.DateField(blank=True, null=True)
     address = models.TextField(blank=True)
+    occupation = models.ForeignKey('Occupation', on_delete=models.SET_NULL, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
