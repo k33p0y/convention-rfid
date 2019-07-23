@@ -59,10 +59,9 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     {% if request.user.is_superuser %}
-      <button type="button" class="btn btn-outline-primary btn-sm js-create-convention"
-        data-url="">
+      <a href="{% url 'convention_create' %}" type="button" class="btn btn-primary btn-sm">
         Add Convention
-      </button>
+      </a>
     {% else %}
       <span class="text-primary font-weight-bold">Open Conventions</span>
     {% endif %}

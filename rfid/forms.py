@@ -44,4 +44,4 @@ class ConventionForm(forms.ModelForm):
 
     class Meta:
         model = Convention
-        fields = ('name', 'is_open', 'date_start', 'date_end', 'venue',)
+        fields = ('name', 'date_start', 'date_end', 'venue',)

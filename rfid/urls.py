@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'), # home page
+    path('convention/create/', views.convention_create, name='convention_create'), # create new convention
     path('convention/<uuid:convention_id>/register/participant/', views.register_participant, name='register_participant'), # register participant
     path('convention/<uuid:convention_id>/register/existing/participant/', views.load_existing_participant_register_page, name='load_existing_participant_register_page'), # register existing participant
     path('convention/<uuid:convention_id>/register/existing/participant/<str:rfid_num>/', views.register_existing_participant, name='register_existing_participant'),

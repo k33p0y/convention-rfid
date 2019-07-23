@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import localtime
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from .models import Convention, Rfid, Attendance, Participant
-from .forms import ParticipantForm, RfidForm
+from .forms import ParticipantForm, RfidForm, ConventionForm
 
 def home(request):
     template_name = 'index.html'
@@ -327,3 +327,18 @@ def check_rfid(request, rfid_num):
         data['rfid_exist'] = False
 
     return JsonResponse(data)
+
+# create convention
+def convention_create(request):
+    if request.method == 'POST':
+        form = ConventionForm(request.POST)
+        if form.is_valid():
+            obj = form.save()
+            return redirect('convention_list')
+    else:
+        form = ConventionForm()
+    template_name = 'rfid/convention/convention-create.html'
+    context = {
+        'form': form,
+    }
+    return render(request, template_name, context)
