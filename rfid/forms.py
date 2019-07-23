@@ -1,5 +1,5 @@
 from django import forms
-from .models import Participant, Rfid
+from .models import Participant, Rfid, Convention
 
 class ParticipantForm(forms.ModelForm):
     address = forms.CharField(
@@ -23,3 +23,25 @@ class RfidForm(forms.ModelForm):
     class Meta:
         model = Rfid
         fields = ('rfid_num', 'society')
+
+class ConventionForm(forms.ModelForm):
+    date_start = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date',},
+        )
+    )
+    date_end = forms.DateField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={'type': 'date',},
+        )
+    )
+    venue = forms.CharField(
+        widget=forms.Textarea(
+            attrs={'rows': 2},
+        ),
+    )
+
+    class Meta:
+        model = Convention
+        fields = ('name', 'is_open', 'date_start', 'date_end', 'venue',)
