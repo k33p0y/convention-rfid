@@ -12,6 +12,7 @@ urlpatterns = [
     path('convention-list-json/', views.ConventionListJson.as_view(), name='convention_list_json'), # convention list json
     path('convention/list/', views.convention_list, name='convention_list'), # load convention list page
     path('convention/<uuid:convention_id>/', views.convention_view, name='convention_view'), # view convention details
+    path('convention/<uuid:convention_id>/update/', views.convention_update, name='convention_update'), # update convention
 
     path('convention/<uuid:convention_id>/check-in/', views.load_check_in_page, name='load_check_in_page'), # load check-in page
     path('convention/<uuid:convention_id>/<str:rfid_num>/check-in/', views.log_attendance_check_in, name='log_attendance_check_in'), # log attendance check-in

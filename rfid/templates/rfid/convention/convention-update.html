@@ -1,0 +1,52 @@
+{% extends 'base/base-main.html' %}
+
+{% block head_title %}Update | {{block.super}}{% endblock %}
+
+<!-- load static files -->
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!-- Dynamic CSS import -->
+{% block css %}
+{% endblock %}
+
+<!-- Dynamic JS import -->
+{% block js %}
+    <!-- <script src="{% static 'base/js/convention/convention.js'%}"></script> -->
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-6 mt-3">
+        {% include 'snippets/messages.html' %}
+        <div class="card bg-light">
+            <div class="card-header font-weight-bold text-white bg-dark">{{convention}}</div>
+            <div class="card-body">
+                <form class="" method="post" action="">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-12 mb-0">
+                            {{ form.name|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.date_start|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.date_end|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-12 mb-0">
+                            {{ form.venue|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-primary btn-block">Update</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

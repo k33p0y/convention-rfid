@@ -342,3 +342,21 @@ def convention_create(request):
         'form': form,
     }
     return render(request, template_name, context)
+
+# update convention
+def convention_update(request, convention_id):
+    convention = get_object_or_404(Convention, id=convention_id)
+
+    if request.method == 'POST':
+        form = ConventionForm(request.POST, instance=convention)
+        if form.is_valid():
+            obj = form.save()
+            return redirect('convention_view', convention_id=convention.id)
+    else:
+        form = ConventionForm(instance=convention)
+    template_name = 'rfid/convention/convention-update.html'
+    context = {
+        'form': form,
+        'convention': convention,
+    }
+    return render(request, template_name, context)
