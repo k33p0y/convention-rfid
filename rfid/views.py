@@ -183,6 +183,8 @@ def get_participant_json(request, convention_id, rfid_num):
             data['participant_name'] = rfid.participant.fname + ' ' + rfid.participant.lname
 
         data['prc_num'] = rfid.participant.prc_num
+        data['occupation'] = rfid.participant.occupation.name
+        data['initials'] = rfid.participant.occupation.initials
     else:
         data['participant_exist'] = False
     

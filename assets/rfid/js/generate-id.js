@@ -22,7 +22,7 @@ $(function (){
         }
     }
 
-    function generate_id(fullname, prc_num){
+    function generate_id(fullname, prc_num, occupation, initials){
         var doc = new jsPDF({
             orientation: 'landscape',
             unit: 'mm',
@@ -32,10 +32,22 @@ $(function (){
 
         doc.setFont("courier");
         doc.setFontStyle("bold");
-        doc.setFontSize(10);
+        doc.setFontSize(7);
         doc.setTextColor(0);
-        doc.text(fullname, 8, 40); // fullname
-        doc.text(prc_num, 8, 45); // PRC Number
+        if (initials) doc.text(fullname + ', ' + initials, 8, 42); // fullname + initials
+        else doc.text(fullname, 8, 42); // fullname
+
+        doc.setFont("courier");
+        doc.setFontStyle("bold");
+        doc.setFontSize(7);
+        doc.setTextColor(0);
+        doc.text(occupation, 8, 45); // PRC Number
+
+        doc.setFont("courier");
+        doc.setFontStyle("bold");
+        doc.setFontSize(7);
+        doc.setTextColor(0);
+        doc.text('PRC# ' + prc_num, 8, 48); // PRC Number
 
         // window.open(doc.output('bloburl'), '_blank');
         doc.autoPrint();
@@ -53,7 +65,7 @@ $(function (){
             },
             success: function(response) {
                 if (response.participant_exist) {
-                    generate_id(response.participant_name, response.prc_num)
+                    generate_id(response.participant_name, response.prc_num, response.occupation, response.initials)
                 } else {
                     Swal.fire({
                         type: 'error',
