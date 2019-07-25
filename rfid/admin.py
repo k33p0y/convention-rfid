@@ -20,4 +20,4 @@ class ConventionAdmin(admin.ModelAdmin):
 
 @admin.register(Occupation)
 class OccupationAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'initials')

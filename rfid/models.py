@@ -71,6 +71,7 @@ class Attendance(models.Model):
 class Occupation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=250)
+    initials = models.CharField(max_length=10)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
