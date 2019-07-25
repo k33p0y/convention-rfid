@@ -34,17 +34,17 @@ $(function (){
         doc.setFontStyle("bold");
         doc.setFontSize(7);
         doc.setTextColor(0);
-        if (initials) doc.text(fullname + ', ' + initials, 8, 42); // fullname + initials
-        else doc.text(fullname, 8, 42); // fullname
+        if (initials) doc.text(fullname.toUpperCase() + ', ' + initials, 8, 42); // fullname + initials
+        else doc.text(fullname.toUpperCase(), 8, 42); // fullname
 
         doc.setFont("courier");
-        doc.setFontStyle("bold");
+        doc.setFontStyle("normal");
         doc.setFontSize(7);
         doc.setTextColor(0);
         doc.text(occupation, 8, 45); // PRC Number
 
         doc.setFont("courier");
-        doc.setFontStyle("bold");
+        doc.setFontStyle("normal");
         doc.setFontSize(7);
         doc.setTextColor(0);
         doc.text('PRC# ' + prc_num, 8, 48); // PRC Number
