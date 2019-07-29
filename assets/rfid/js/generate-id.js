@@ -47,7 +47,7 @@ $(function (){
         doc.setFontStyle("normal");
         doc.setFontSize(7);
         doc.setTextColor(0);
-        doc.text('PRC# ' + prc_num, 8, 48); // PRC Number
+        doc.text(prc_num, 8, 48); // PRC Number
 
         // window.open(doc.output('bloburl'), '_blank');
         doc.autoPrint();
