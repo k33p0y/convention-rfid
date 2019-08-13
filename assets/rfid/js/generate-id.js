@@ -22,7 +22,7 @@ $(function (){
         }
     }
 
-    function generate_id(fullname, prc_num, occupation, initials){
+    function generate_id(lastname, firstname, prc_num, occupation, initials){
         var doc = new jsPDF({
             orientation: 'landscape',
             unit: 'mm',
@@ -32,22 +32,29 @@ $(function (){
 
         doc.setFont("courier");
         doc.setFontStyle("bold");
-        doc.setFontSize(7);
+        doc.setFontSize(10);
         doc.setTextColor(0);
-        if (initials) doc.text(fullname.toUpperCase() + ', ' + initials, 8, 42); // fullname + initials
-        else doc.text(fullname.toUpperCase(), 8, 42); // fullname
+        if (initials) doc.text(firstname.toUpperCase(), 40, 35); // fullname + initials
+        else doc.text(firstname.toUpperCase(), 40, 35); // fullname
 
         doc.setFont("courier");
-        doc.setFontStyle("normal");
-        doc.setFontSize(7);
+        doc.setFontStyle("bold");
+        doc.setFontSize(10);
         doc.setTextColor(0);
-        doc.text(occupation, 8, 45); // PRC Number
+        if (initials) doc.text(lastname.toUpperCase() + ',' + initials, 40, 38); // fullname + initials
+        else doc.text(lastname.toUpperCase(), 40, 38); // fullname
 
         doc.setFont("courier");
-        doc.setFontStyle("normal");
-        doc.setFontSize(7);
+        doc.setFontStyle("bold");
+        doc.setFontSize(8);
         doc.setTextColor(0);
-        doc.text(prc_num, 8, 48); // PRC Number
+        doc.text(occupation, 40, 42); // Occupation
+
+        doc.setFont("courier");
+        doc.setFontStyle("bold");
+        doc.setFontSize(8);
+        doc.setTextColor(0);
+        doc.text(prc_num, 40, 45); // PRC Number
 
         // window.open(doc.output('bloburl'), '_blank');
         doc.autoPrint();
@@ -65,7 +72,7 @@ $(function (){
             },
             success: function(response) {
                 if (response.participant_exist) {
-                    generate_id(response.participant_name, response.prc_num, response.occupation, response.initials)
+                    generate_id(response.participant_lname, response.participant_fname, response.prc_num, response.occupation, response.initials)
                 } else {
                     Swal.fire({
                         type: 'error',
