@@ -17,7 +17,7 @@ $(function (){
             if(keycode == '13'){
                 get_participant_json();
                 // console.log(rfid_num);
-                rfid_num = '';
+                // rfid_num = '';
             }
         }
     }
@@ -113,7 +113,8 @@ $(function (){
             },
             success: function(response) {
                 if (response.participant_exist) {
-                    generate_certificate(response.participant_name)
+                    // generate_certificate(response.participant_name)
+                    window.open(`/convention/${convention_id}/${rfid_num}/certificate/print/`, '_blank');
                 } else {
                     Swal.fire({
                         type: 'error',
@@ -122,8 +123,10 @@ $(function (){
                         timer: 2000,
                     })
                 }
+                rfid_num = '';
             },
             error: function(xhr, status, error) {
+                rfid_num = '';
                 Swal.fire({
                     type: 'error',
                     title: 'Oops...',
