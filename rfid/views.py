@@ -200,6 +200,16 @@ def load_certificate_generation_page(request, convention_id):
     }
     return render(request, template_name, context)
 
+# load government certificate generation page
+def load_government_certificate_generation_page(request, convention_id):
+    convention = get_object_or_404(Convention, id=convention_id)
+
+    template_name = 'rfid/generate-government-certificate.html'
+    context = {
+        'convention': convention
+    }
+    return render(request, template_name, context)
+
 # load id generation page
 def load_id_generation_page(request, convention_id):
     convention = get_object_or_404(Convention, id=convention_id)
@@ -389,7 +399,7 @@ def print_certificate(request, convention_id, rfid_num):
     }
     return render(request, template_name, context)
 
-def print_certificate_governemt(request, convention_id, rfid_num):
+def print_certificate_government(request, convention_id, rfid_num):
     convention = get_object_or_404(Convention, id=convention_id)
     if convention.rfids.filter(rfid_num=rfid_num).exists():
         rfid = get_object_or_404(Rfid, rfid_num=rfid_num)

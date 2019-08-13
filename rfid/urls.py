@@ -23,7 +23,8 @@ urlpatterns = [
     path('convention/<uuid:convention_id>/<str:rfid_num>/json/', views.get_participant_json, name='get_participant_json'), # get participant json, check if participant is registered to convention
 
     path('convention/<uuid:convention_id>/certificate/', views.load_certificate_generation_page, name='load_certificate_generation_page'), # load certificate generation page
-    path('convention/<uuid:convention_id>/id-card/', views.load_id_generation_page, name='load_id_generation_page'), # load certificate generation page
+    path('convention/<uuid:convention_id>/government-certificate/', views.load_government_certificate_generation_page, name='load_government_certificate_generation_page'), # load government certificate generation page
+    path('convention/<uuid:convention_id>/id-card/', views.load_id_generation_page, name='load_id_generation_page'), # load id generation page
 
     path('participant-list-json/', views.ParticipantListJson.as_view(), name='participant_list_json'), # participant list json
     path('participant/list/', views.participant_list, name='participant_list'), # load participant list page
@@ -33,5 +34,5 @@ urlpatterns = [
     # PRINT
     path('convention/<uuid:convention_id>/<str:rfid_num>/id/print/', views.print_id_card, name='print_id_card'), # print id card (html hard-coded)
     path('convention/<uuid:convention_id>/<str:rfid_num>/certificate/print/', views.print_certificate, name='print_certificate'), # print certificate (html hard-coded)
-    path('convention/<uuid:convention_id>/<str:rfid_num>/certificate-government/print/', views.print_certificate_governemt, name='print_certificate_governemt'), # print government certificate (html hard-coded)
+    path('convention/<uuid:convention_id>/<str:rfid_num>/certificate-government/print/', views.print_certificate_government, name='print_certificate_government'), # print government certificate (html hard-coded)
 ]
