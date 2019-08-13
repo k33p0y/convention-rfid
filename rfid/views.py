@@ -388,3 +388,16 @@ def print_certificate(request, convention_id, rfid_num):
         'rfid': rfid,
     }
     return render(request, template_name, context)
+
+def print_certificate_governemt(request, convention_id, rfid_num):
+    convention = get_object_or_404(Convention, id=convention_id)
+    if convention.rfids.filter(rfid_num=rfid_num).exists():
+        rfid = get_object_or_404(Rfid, rfid_num=rfid_num)
+    else:
+        rfid = None
+    
+    template_name = 'rfid/print-certificate-government.html'
+    context = {
+        'rfid': rfid,
+    }
+    return render(request, template_name, context)

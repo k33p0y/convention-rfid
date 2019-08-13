@@ -1,0 +1,48 @@
+body {
+    /* font-family: Arial, Helvetica, sans-serif; */
+    font-family: 'Times New Roman', Times, serif;
+
+    /* a4 */
+    /* width: 210mm;
+    height: 297mm; */
+    /* width: 8.27in;
+    height: 11.69in; */
+
+    /* letter */
+    /* width: 215.9mm;
+    height: 279.4mm; */
+    width: 8.5in;
+    height: 11in;
+
+    /* legal */
+    /* width: 215.9mm;
+    height: 330.2mm; */
+    /* width: 8.5in;
+    height: 13in; */
+
+    margin: 0;
+}
+span {
+    margin: 0;
+    padding: 0;
+}
+@media print {
+    @page {
+        size: 8.5in 11in landscape;
+        margin: 0;
+    }
+}
+div.absolute {
+    position: absolute;
+    top: 350px;
+    /* right: 0; */
+    width: 100%;
+    /* height: 100px; */
+    /* border: 1px solid black; */
+    margin: 0;
+    text-align: center
+}
+
+/* div.absolute div{
+    margin: auto
+} */
