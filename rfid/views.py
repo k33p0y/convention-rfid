@@ -362,3 +362,30 @@ def convention_update(request, convention_id):
         'convention': convention,
     }
     return render(request, template_name, context)
+
+def print_id_card(request, convention_id, rfid_num):
+    convention = get_object_or_404(Convention, id=convention_id)
+    if convention.rfids.filter(rfid_num=rfid_num).exists():
+        rfid = get_object_or_404(Rfid, rfid_num=rfid_num)
+
+        # data['participant_exist'] = True
+
+        # if rfid.participant.mname:
+        #     data['participant_lname'] = rfid.participant.lname
+        #     data['participant_fname'] = rfid.participant.fname + ' ' + rfid.participant.mname[0] + '. '
+        # else:
+        #     data['participant_lname'] = rfid.participant.lname
+        #     data['participant_fname'] = rfid.participant.fname
+
+        # data['prc_num'] = rfid.participant.prc_num
+        # data['occupation'] = rfid.participant.occupation.name
+        # data['initials'] = rfid.participant.occupation.initials
+    else:
+        # data['participant_exist'] = False
+        rfid = None
+    
+    template_name = 'rfid/print-id.html'
+    context = {
+        'rfid': rfid,
+    }
+    return render(request, template_name, context)

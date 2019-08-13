@@ -29,4 +29,6 @@ urlpatterns = [
     path('participant/list/', views.participant_list, name='participant_list'), # load participant list page
     path('participant/search/', views.load_participant_search_page, name='load_participant_search_page'), # load participant search page
     path('participant/search/<str:prc_num>/', views.participant_conventions_json, name='participant_conventions_json'), # participant convention list json
+
+    path('convention/<uuid:convention_id>/<str:rfid_num>/id/print/', views.print_id_card, name='print_id_card'), # print id card (html hard-coded)
 ]

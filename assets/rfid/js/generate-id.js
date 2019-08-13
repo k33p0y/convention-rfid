@@ -17,7 +17,7 @@ $(function (){
             if(keycode == '13'){
                 get_participant_json();
                 // console.log(rfid_num);
-                rfid_num = '';
+                // rfid_num = '';
             }
         }
     }
@@ -30,16 +30,20 @@ $(function (){
             format: [256.794,  161.925],
         });
 
+        // var name = fullname.toUpperCase()
+        // doc.splitTextToSize(string, length)
+        // name = doc.splitTextToSize(fullname.toUpperCase(), 40)
+
         doc.setFont("courier");
         doc.setFontStyle("bold");
-        doc.setFontSize(10);
+        doc.setFontSize(9);
         doc.setTextColor(0);
         if (initials) doc.text(firstname.toUpperCase(), 40, 35); // fullname + initials
         else doc.text(firstname.toUpperCase(), 40, 35); // fullname
 
         doc.setFont("courier");
         doc.setFontStyle("bold");
-        doc.setFontSize(10);
+        doc.setFontSize(9);
         doc.setTextColor(0);
         if (initials) doc.text(lastname.toUpperCase() + ',' + initials, 40, 38); // fullname + initials
         else doc.text(lastname.toUpperCase(), 40, 38); // fullname
@@ -72,7 +76,8 @@ $(function (){
             },
             success: function(response) {
                 if (response.participant_exist) {
-                    generate_id(response.participant_lname, response.participant_fname, response.prc_num, response.occupation, response.initials)
+                    // generate_id(response.participant_lname, response.participant_fname, response.prc_num, response.occupation, response.initials)
+                    window.open(`/convention/${convention_id}/${rfid_num}/id/print/`, '_blank');
                 } else {
                     Swal.fire({
                         type: 'error',
@@ -81,8 +86,10 @@ $(function (){
                         timer: 2000,
                     })
                 }
+                rfid_num = '';
             },
             error: function(xhr, status, error) {
+                rfid_num = '';
                 Swal.fire({
                     type: 'error',
                     title: 'Oops...',
