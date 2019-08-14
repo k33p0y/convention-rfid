@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import localtime
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from .models import Convention, Rfid, Attendance, Participant
+from .models import Convention, Rfid, Attendance, Participant, Occupation
 from .forms import ParticipantForm, RfidForm, ConventionForm
 
 def home(request):
@@ -161,11 +161,15 @@ def convention_view(request, convention_id):
 
 def generate_attendance_json(request, convention_id):
     convention = get_object_or_404(Convention, id=convention_id)
-    attendance = Attendance.objects.select_related('rfid__participant', 'convention').filter(convention=convention).values(
-        'rfid__participant__fname', 'rfid__participant__mname', 'rfid__participant__lname', 'rfid__participant__prc_num', 'check_in', 'check_out', 'date_created'
+    attendance = Attendance.objects.select_related('rfid__participant__occupation', 'convention').filter(convention=convention).values(
+        'rfid__participant__fname', 'rfid__participant__mname', 'rfid__participant__lname', 'rfid__participant__prc_num', 'rfid__participant__occupation', 'rfid__participant__occupation__name', 'check_in', 'check_out', 'date_created'
     )
 
     attendance_list = list(attendance)
+    for attendance in attendance_list:
+        attendance['check_in'] = attendance['check_in'].strftime('%H:%M %p')
+        attendance['check_out'] = attendance['check_out'].strftime('%H:%M %p')
+    
     return JsonResponse(attendance_list, safe=False)
 
 # get participant json
