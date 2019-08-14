@@ -42,7 +42,7 @@ $(function (){
                     Swal.fire({
                         // position: 'top-end',
                         type: 'success',
-                        title: `Thank you for comming ${response.participant_name}!`,
+                        title: `Thank you for coming ${response.participant_name}!`,
                         showConfirmButton: false,
                         timer: 2000
                     });
