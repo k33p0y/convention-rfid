@@ -18,8 +18,18 @@ div.absolute {
     position: absolute;
     top: 350px;
     right: 0;
-    width: 500px;
+    width: 520px;
     height: 100px;
     /* border: 1px solid black; */
     margin: 0;
+}
+
+span.participant_name{
+    font-size: 9.5mm;
+    font-weight: bold;
+}
+
+span.participant_occupation, span.participant_prc_num{
+    font-size: 8.5mm;
+    /* font-weight: bold; */
 }

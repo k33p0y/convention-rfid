@@ -4,6 +4,7 @@ from .models import Participant, Rfid, Convention, Society, Occupation
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):
     list_display = ('prc_num', 'fname', 'lname', 'mname', 'birthdate', 'address')
+    search_fields = ('prc_num', 'fname', 'lname', 'mname')
 
 @admin.register(Society)
 class SocietyAdmin(admin.ModelAdmin):
@@ -12,6 +13,7 @@ class SocietyAdmin(admin.ModelAdmin):
 @admin.register(Rfid)
 class RfidAdmin(admin.ModelAdmin):
     list_display = ('rfid_num', 'participant', 'society')
+    search_fields = ('rfid_num', 'participant__fname', 'participant_lname', 'participant_mname')
 
 @admin.register(Convention)
 class ConventionAdmin(admin.ModelAdmin):
