@@ -377,6 +377,7 @@ def convention_update(request, convention_id):
     }
     return render(request, template_name, context)
 
+# load print id card page
 def print_id_card(request, convention_id, rfid_num):
     convention = get_object_or_404(Convention, id=convention_id)
     if convention.rfids.filter(rfid_num=rfid_num).exists():
@@ -390,6 +391,7 @@ def print_id_card(request, convention_id, rfid_num):
     }
     return render(request, template_name, context)
 
+# load print certificate page
 def print_certificate(request, convention_id, rfid_num):
     convention = get_object_or_404(Convention, id=convention_id)
     if convention.rfids.filter(rfid_num=rfid_num).exists():
@@ -403,6 +405,7 @@ def print_certificate(request, convention_id, rfid_num):
     }
     return render(request, template_name, context)
 
+# load print government certificate page
 def print_certificate_government(request, convention_id, rfid_num):
     convention = get_object_or_404(Convention, id=convention_id)
     if convention.rfids.filter(rfid_num=rfid_num).exists():
@@ -413,5 +416,17 @@ def print_certificate_government(request, convention_id, rfid_num):
     template_name = 'rfid/print-certificate-government.html'
     context = {
         'rfid': rfid,
+    }
+    return render(request, template_name, context)
+
+# load registered participants to convention page
+def registered_participants_to_convention(request, convention_id):
+    convention = get_object_or_404(Convention, id=convention_id)
+    rfids = convention.rfids.select_related('participant__occupation').all
+    
+    template_name = 'rfid/participant/convention-participant-list.html'
+    context = {
+        'convention': convention,
+        'rfids': rfids,
     }
     return render(request, template_name, context)

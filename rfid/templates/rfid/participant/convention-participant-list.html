@@ -1,0 +1,114 @@
+{% extends 'base/base-convention.html' %}
+
+{% block head_title %}Participants | {{block.super}}{% endblock %}
+
+<!-- load static files -->
+{% load static %}
+
+<!-- Dynamic CSS import -->
+{% block css %}
+    <link rel="stylesheet" href="{% static 'dataTables-1.10.19/jquery.dataTables.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dataTables-1.10.19/responsive-2.2.2/responsive.dataTables.min.css' %}">
+{% endblock %}
+
+<!-- Dynamic JS import -->
+{% block js %}
+    <script src="{% static 'dataTables-1.10.19/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'dataTables-1.10.19/responsive-2.2.2/dataTables.responsive.min.js' %}"></script>
+    <script>
+        $(function(){
+            $('#table-convention').DataTable({
+                order: [[ 2, "asc" ], [ 3, "asc"], [ 4, "asc"]],
+                columnDefs: [
+                    {
+                        responsivePriority: 1, targets: 0 // rfid
+                    },
+                    {
+                        responsivePriority: 2, targets: 1 // prc no.
+                    },
+                    {
+                        responsivePriority: 3, targets: 2 // lastname
+                    },
+                ],
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-2 text-gray-800">{{convention}}</h1>
+<!-- <p class="mb-4 font-weight-bold text-primary">Registered Participants</p> -->
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Registered Participants</h6>
+            <!-- <div class="input-group" id="div-searchbar" >
+                <input id="input-searchbar" type="text" class="form-control border border-right-0" placeholder="Search PRC No...">
+                <span class="input-group-append">
+                    <button id="btn-search-participant" class="btn btn-outline-primary border border-left-0" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div> -->
+            </div>
+            <div class="card-body">
+            <div class="table-responsive">
+                <table class="table display responsive" id="table-convention" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>RFID</th>
+                            <th>PRC No.</th>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                            <th>Middlename Name</th>
+                            <th>Birthdate</th>
+                            <th class="none">Occupation</th>
+                            <th class="none">Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rfid in rfids %}
+                            <tr>
+                                <td>
+                                    <a class="font-weight-bold" href="">
+                                        {{rfid}}
+                                    </a>
+                                </td>
+                                <td>{{rfid.participant.prc_num}}</td>
+                                <td>{{rfid.participant.lname|title}}</td>
+                                <td>{{rfid.participant.fname|title}}</td>
+                                <td>{{rfid.participant.mname|title}}</td>
+                                <td>
+                                    {% if rfid.participant.birthdate %}
+                                        {{rfid.participant.birthdate|date:"m-d-Y"}}
+                                    {% endif %}
+                                </td>
+                                <td>{{rfid.participant.occupation}}</td>
+                                <td>{{rfid.participant.address}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>RFID</th>
+                            <th>PRC No.</th>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                            <th>Middlename Name</th>
+                            <th>Birthdate</th>
+                            <th class="none">Occupation</th>
+                            <th class="none">Address</th>
+                        </tr>
+                    </tfoot>
+                    <tbody></tbody>
+                </table>
+            </div>
+            </div>
+        <!-- <ul>
+            {% for rfid in rfids %}
+                <li>{{rfid.participant}} - {{rfid.participant.occupation}}</li>
+            {% endfor %}
+        </ul> -->
+        </div>
+{% endblock %}

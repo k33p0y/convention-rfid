@@ -63,6 +63,17 @@
                 </div>
             </div>
         </li>
+        <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#participantCollapse" aria-expanded="true" aria-controls="participantCollapse">
+                    <i class="fas fa-users"></i>
+                    <span>Paricipants</span>
+                </a>
+                <div id="participantCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{% url 'registered_participants_to_convention' convention_id=convention.id %}">List</a>
+                    </div>
+                </div>
+            </li>
     {% endif %}
     
     <!-- Divider -->

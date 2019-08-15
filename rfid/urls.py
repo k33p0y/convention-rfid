@@ -35,4 +35,7 @@ urlpatterns = [
     path('convention/<uuid:convention_id>/<str:rfid_num>/id/print/', views.print_id_card, name='print_id_card'), # print id card (html hard-coded)
     path('convention/<uuid:convention_id>/<str:rfid_num>/certificate/print/', views.print_certificate, name='print_certificate'), # print certificate (html hard-coded)
     path('convention/<uuid:convention_id>/<str:rfid_num>/certificate-government/print/', views.print_certificate_government, name='print_certificate_government'), # print government certificate (html hard-coded)
+
+    # REGISTERED PARTICIPANTS TO CONVENTION LIST PAGE
+    path('convention/<uuid:convention_id>/registered/participant/list/', views.registered_participants_to_convention, name='registered_participants_to_convention'),
 ]
