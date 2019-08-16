@@ -13,7 +13,7 @@ class SocietyAdmin(admin.ModelAdmin):
 @admin.register(Rfid)
 class RfidAdmin(admin.ModelAdmin):
     list_display = ('rfid_num', 'participant', 'society')
-    search_fields = ('rfid_num', 'participant__fname', 'participant_lname', 'participant_mname')
+    search_fields = ('rfid_num', 'participant__lname', 'participant__fname', 'participant__mname', 'participant__prc_num')
 
 @admin.register(Convention)
 class ConventionAdmin(admin.ModelAdmin):

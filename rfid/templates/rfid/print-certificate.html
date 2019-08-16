@@ -10,11 +10,11 @@
 </head>
 <body>
     <div class="absolute">
-        <span style="font-size:xx-large;">{{rfid.participant.fname|title}}</span>
+        <span class="participant_name">{{rfid.participant.fname|title}}</span>
         {% if rfid.participant.mname %}
-            <span style="font-size:xx-large;">{{rfid.participant.mname|make_list|first|upper}}.</span>
+            <span  class="participant_name">{{rfid.participant.mname|make_list|first|upper}}.</span>
         {% endif %}
-        <span style="font-size:xx-large;">{{rfid.participant.lname|title}}</span>{% if rfid.participant.occupation.initials %}, <span style="font-size:xx-large;">{{rfid.participant.occupation.initials}}</span>{% endif %}
+        <span  class="participant_name">{{rfid.participant.lname|title}}</span>{% if rfid.participant.occupation.initials %}, <span class="participant_name">{{rfid.participant.occupation.initials}}</span>{% endif %}
     </div>
 </body>
 </html>
