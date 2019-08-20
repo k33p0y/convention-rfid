@@ -167,8 +167,10 @@ def generate_attendance_json(request, convention_id):
 
     attendance_list = list(attendance)
     for attendance in attendance_list:
-        attendance['check_in'] = attendance['check_in'].strftime('%H:%M %p')
-        attendance['check_out'] = attendance['check_out'].strftime('%H:%M %p')
+        if attendance['check_in']:
+            attendance['check_in'] = attendance['check_in'].strftime('%H:%M %p')
+        if attendance['check_out']:
+            attendance['check_out'] = attendance['check_out'].strftime('%H:%M %p')
     
     return JsonResponse(attendance_list, safe=False)
 
